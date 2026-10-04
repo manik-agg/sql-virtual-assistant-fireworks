@@ -1,0 +1,11 @@
+original_column_name,column_name,column_description,data_format,value_description
+trans_id,,Unique identifier for the transaction (primary key).,,
+account_id,,Identifier of the internal account to which this transaction belongs (foreign key to account table).,,
+date,,Date on which the transaction was recorded.,,
+type,,"Category of the transaction; observed value ""PRIJEM"" likely means an incoming/credit transaction.",,
+operation,,"Specific operation type; observed codes include ""VKLAD"" (deposit) and ""PREVOD Z UCTU"" (transfer from another account).",,
+amount,,"Monetary amount of the transaction (positive integer, presumably in the account's currency).",,
+balance,,Account balance after the transaction was applied.,,
+k_symbol,,Unclear – possibly a reference or purpose code associated with the transaction.,,
+bank,,"Bank identifier for external transactions; example value ""AB"" likely denotes a specific bank.",,
+account,,"External account number involved in the transaction (e.g., 41403269); unclear if always external or sometimes internal.",,

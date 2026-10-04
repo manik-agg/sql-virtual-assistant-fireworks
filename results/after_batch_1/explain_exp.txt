@@ -1,0 +1,7 @@
+
+ARM A async: 32 explanations; deterministic problems in 0/32
+  explain latency P50 0.51s max 0.67s; tokens out mean 79; cost/query $0.00007
+  main call: accuracy 31/32, P50 1.11s, $0.00021
+ARM B inline: accuracy 30/32, P50 1.74s, tokens out mean 259, $0.00021
+
+(The per-question explanation listing is omitted: it restates the development questions, which are not redistributed.)

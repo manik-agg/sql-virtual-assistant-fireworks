@@ -1,0 +1,12 @@
+{
+ "_note": "FRESH sets for the proxy-gap work. D3 and L3 are for the FINAL measurement only: never used to design or tune the check.",
+ "D3_proxy_fresh": ["What is the average age of our customers?", "How many VIP clients are there?", "What is the total deposit amount held by each client?",
+                    "How many defaulters are there?", "What is the average monthly spend per account?", "How many accounts are dormant?"],
+ "L3_legit_fresh": ["How many clients are female?", "What is the total value of all loans?", "How many accounts are in the Prague region?",
+                    "Which region has the most clients?", "What is the typical loan size?", "How many people have a gold card?",
+                    "How many cards of each type have been issued?", "What is the largest transaction ever recorded?",
+                    "How many standing orders exist for each purpose code?", "What is the average duration of a loan in months?",
+                    "Which district has the highest number of crimes in 1996?", "How many transactions were made by credit card?",
+                    "What is the oldest client's birth date?", "How many accounts were opened each year?", "What is the total amount of insurance payments?",
+                    "How many men and women are clients?", "Which loan has the biggest monthly payment?", "How many cards were issued after 1996?"]
+}

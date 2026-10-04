@@ -1,0 +1,60 @@
+[project]
+name = "sql-virtual-assistant"
+version = "0.1.0"
+description = "SQL Virtual Assistant agent with Fireworks: ask your database in plain English and every answer shows its work (SQL, tables, assumptions, evidence)"
+requires-python = ">=3.11"
+dependencies = [
+    "openai",
+    "pydantic",
+    "python-dotenv",
+    "sqlglot>=30.20.0",
+    "rich>=15.0.0",
+    "prompt-toolkit>=3.0.52",
+]
+
+[project.scripts]
+cli = "src.cli:main"
+evals = "eval.run:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src", "eval"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "httpx",    # builds fake API errors in tests (already a dependency of openai; declared because tests import it)
+    "pexpect",  # drives the real CLI through a pseudo-terminal in eval/e2e_terminal.py
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120  # the existing code style; the default of 88 would reflow almost every line
+
+[tool.ruff.lint]
+# Pinned on purpose: a user-level ruff config would otherwise add rules and make the count differ between machines.
+select = ["E4", "E7", "E9", "F", "W", "I", "B", "UP", "SIM", "RUF100"]
+ignore = [
+    "B905",   # zip() without strict=: the pairs here are equal-length by construction or truncate on purpose
+    "SIM105", # try/except/pass with a comment saying why reads better than contextlib.suppress
+]
+
+[tool.coverage.run]
+source = ["src", "eval"]
+# Not application code: the eval/ scripts below are one-off experiments or manual tools
+# (e2e_terminal.py drives a real pty and needs a live key).
+omit = [
+    "eval/auto_describe.py",
+    "eval/e2e_terminal.py",
+    "eval/explain_exp.py",
+    "eval/make_shop_db.py",
+]
+
+[tool.mypy]
+ignore_missing_imports = true

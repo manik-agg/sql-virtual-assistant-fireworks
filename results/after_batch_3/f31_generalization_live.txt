@@ -1,0 +1,29 @@
+
+=== CLINIC (17 messy tables, no docs): desc_dir=None startup=0.01s system_prompt≈1465 tokens
+  m01 PASS [answer]  1.2s prompt=2045 | How many patients are female?                                  | "SELECT COUNT(*) AS female_patient_count FROM Pat WHERE sex = 'F';"
+  m02 PASS [answer]  0.7s prompt=2049 | How many doctors work in the Cardiology department?            | "SELECT COUNT(*) AS doctor_count FROM dr WHERE dept_cd = 'CARD';"
+  m03 PASS [answer]  0.8s prompt=2049 | What is the total amount billed across all bills?              | 'SELECT SUM(tot) AS total_billed FROM bill;'
+  m04 PASS [answer]  0.8s prompt=2045 | How many appointments were cancelled?                          | "SELECT COUNT(*) AS cancelled_appointments FROM appt WHERE stat = 'C';"
+  m05 MISS [answer]  0.8s prompt=2047 | How many appointments were no-shows?                           | "SELECT COUNT(*) AS no_show_count FROM appt WHERE stat = 'X';"
+        note: undocumented code N=no-show (NOT inferable) | gold=[(320,)] got=[(253,)]
+  m06 PASS [answer]  1.3s prompt=2050 | How many appointments took place in March 2024?                | 'SELECT COUNT(*) AS count FROM appt WHERE substr("from",1,4) = \'2024\' AND substr("from",5,2) = \'03\';'
+  m07 PASS [answer]  0.9s prompt=2049 | How many prescriptions were issued in 2023?                    | 'SELECT COUNT(*) AS prescription_count FROM rx WHERE issued BETWEEN 20230101 AND 20231231;'
+  m08 PASS [answer]  1.4s prompt=2055 | Which drug has been prescribed in the largest total quantity?  | 'SELECT d.nm FROM drug d JOIN rx_item ri ON d.drug_id = ri.drug_id GROUP BY d.drug_id ORDER BY SUM(ri.qty) DESC LIMIT 1;'
+  m09 MISS [answer]  1.0s prompt=2051 | How many patients have more than one insurance plan on record? | 'SELECT COUNT(*) AS patient_count FROM (SELECT PatID FROM pat_ins GROUP BY PatID HAVING COUNT(*) > 1);'
+        note: composite PK table, HAVING | gold=[(213,)] got=[(273,)]
+  m10 PASS [answer]  1.1s prompt=2052 | What is the average bill total for appointments with Dr 5?     | 'SELECT AVG(b.tot) AS avg_total FROM bill b JOIN appt a ON b.appt_id = a.appt_id WHERE a.dr_id = 5;'
+  m11 PASS [answer]  0.8s prompt=2047 | How many lab results are flagged high?                         | "SELECT COUNT(*) AS high_flag_count FROM lab_res WHERE flag = 'H';"
+  m12 PASS [answer]  0.8s prompt=2048 | How many patients are in the group B?                          | 'SELECT COUNT(*) AS count FROM Pat WHERE "group" = \'B\';'
+  m13 PASS [answer]  1.3s prompt=2051 | Which department has the most patients? Give the department na | 'SELECT d.nm FROM dept d JOIN (SELECT dept_cd, COUNT(*) AS cnt FROM Pat GROUP BY dept_cd) p ON d.cd = p.dept_cd ORDER BY '
+  m14 PASS [answer]  1.0s prompt=2049 | How many admissions lasted more than 100 days?                 | 'SELECT COUNT(*) AS admission_count FROM adm WHERE julianday(out_dt) - julianday(in_dt) > 100;'
+  m15 PASS [answer]  0.8s prompt=2055 | What is the total unpaid amount, meaning billed minus paid, ov | 'SELECT SUM(tot - paid) AS total_unpaid FROM bill;'
+  -> 13/15 correct, latency P50 0.95s max 1.41s
+
+=== BIG (225 tables, no docs): desc_dir=None startup=0.09s system_prompt≈21816 tokens
+  b1 PASS [answer]  2.9s prompt=33509 | How many customers are from Germany?                           | "SELECT COUNT(*) AS customer_count FROM customer_master WHERE country = 'DE';"
+  b2 PASS [answer]  3.6s prompt=33513 | What is the total invoice amount in 2023?                      | 'SELECT SUM(invoice_total) AS total_invoice_amount FROM sales_invoice WHERE invoice_year = 2023;'
+  b3 PASS [answer]  2.8s prompt=33515 | What is the average salary of employees hired after 2015?      | 'SELECT AVG(salary) AS average_salary FROM employee_roster WHERE hire_year > 2015;'
+  b4 PASS [answer]  3.0s prompt=33510 | Which warehouse city has the largest capacity?                 | 'SELECT site_city FROM warehouse_site ORDER BY capacity DESC LIMIT 1;'
+  b5 PASS [answer]  2.6s prompt=33512 | What is the name of the most expensive product?                | 'SELECT product_name FROM product_catalog ORDER BY list_price DESC LIMIT 1;'
+  b6 PASS [answer]  3.1s prompt=33511 | How many invoices does customer 17 have?                       | 'SELECT COUNT(*) AS invoice_count FROM sales_invoice WHERE customer_id = 17;'
+  -> 6/6 correct, latency P50 2.96s max 3.60s

@@ -1,0 +1,6 @@
+WRITE phrases (n=31): read-only message 30/31 | wrong refusal wording 1 | clarify 0 | ANSWERED with SQL 0
+     not read-only: out_of_scope Cancel account 55 -> I couldn't find data for account_deletion in this database. Closest in
+READ look-alikes (n=28): falsely refused with the read-only message 3/28 | answered 15 | other refusal/clarify 10
+     FALSE read-only: Remove the loans below 1000 from the list
+     FALSE read-only: Change the region to Prague
+     FALSE read-only: Change it to account 2000

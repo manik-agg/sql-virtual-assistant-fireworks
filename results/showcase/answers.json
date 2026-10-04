@@ -1,0 +1,294 @@
+{
+  "meta": {
+    "model": "accounts/fireworks/models/gpt-oss-120b",
+    "date": "2026-10-04",
+    "scorer": "eval/compare.py (strict: columns by position, exact strings, one float tolerance, order only if the reference has ORDER BY)",
+    "cases_sha256": "db469ee0609ef2b43cb430f75a08e3d127b8436268d566a633add82696900fba",
+    "note": "Questions and reference SQL were written and verified before the first run and not changed afterwards. Misses are kept."
+  },
+  "summary": {
+    "strict_match": 10,
+    "of": 10,
+    "first_attempt_ok": 10,
+    "median_latency_s": 1.32,
+    "total_cost_usd": 0.004931
+  },
+  "answers": {
+    "s_01": {
+      "question": "How many different bank codes appear as the destination of standing orders?",
+      "tier": 1,
+      "status": "answer",
+      "sql": "SELECT COUNT(DISTINCT bank_to) AS distinct_bank_codes FROM \"order\";",
+      "answer": "distinct_bank_codes: 13",
+      "gold_sql": "SELECT COUNT(DISTINCT bank_to) FROM \"order\"",
+      "expected": [
+        [
+          13
+        ]
+      ],
+      "returned": [
+        [
+          13
+        ]
+      ],
+      "match": true,
+      "shape_differs": false,
+      "first_attempt_ok": true,
+      "retries": 0,
+      "latency_s": 1.39,
+      "cost_usd": 0.000494
+    },
+    "s_02": {
+      "question": "Which card type has been issued the most?",
+      "tier": 1,
+      "status": "answer",
+      "sql": "SELECT type FROM card GROUP BY type ORDER BY COUNT(*) DESC LIMIT 1;",
+      "answer": "The most issued card type is classic.",
+      "gold_sql": "SELECT type FROM card GROUP BY type ORDER BY COUNT(*) DESC LIMIT 1",
+      "expected": [
+        [
+          "classic"
+        ]
+      ],
+      "returned": [
+        [
+          "classic"
+        ]
+      ],
+      "match": true,
+      "shape_differs": false,
+      "first_attempt_ok": true,
+      "retries": 0,
+      "latency_s": 1.0,
+      "cost_usd": 0.00047
+    },
+    "s_03": {
+      "question": "What is the average number of inhabitants of the districts in the south Moravia region?",
+      "tier": 2,
+      "status": "answer",
+      "sql": "SELECT AVG(CAST(A4 AS INTEGER)) AS avg_inhabitants FROM district WHERE A3 = 'south Moravia';",
+      "answer": "The average number of inhabitants of the districts in the south Moravia region is 146,784.93.",
+      "gold_sql": "SELECT AVG(A4) FROM district WHERE A3 = 'south Moravia'",
+      "expected": [
+        [
+          146784.92857142858
+        ]
+      ],
+      "returned": [
+        [
+          146784.92857142858
+        ]
+      ],
+      "match": true,
+      "shape_differs": false,
+      "first_attempt_ok": true,
+      "retries": 0,
+      "latency_s": 1.06,
+      "cost_usd": 0.000485
+    },
+    "s_04": {
+      "question": "How many accounts are located in districts where the average salary is above 9,500?",
+      "tier": 2,
+      "status": "answer",
+      "sql": "SELECT COUNT(*) AS account_count FROM account a JOIN district d ON a.district_id = d.district_id WHERE d.A11 > 9500;",
+      "answer": "There are 1,690 accounts.",
+      "gold_sql": "SELECT COUNT(*) FROM account a JOIN district d ON a.district_id = d.district_id WHERE d.A11 > 9500",
+      "expected": [
+        [
+          1690
+        ]
+      ],
+      "returned": [
+        [
+          1690
+        ]
+      ],
+      "match": true,
+      "shape_differs": false,
+      "first_attempt_ok": true,
+      "retries": 0,
+      "latency_s": 1.31,
+      "cost_usd": 0.000511
+    },
+    "s_05": {
+      "question": "What is the combined value of loans whose contract finished without being fully paid?",
+      "tier": 2,
+      "status": "answer",
+      "sql": "SELECT SUM(amount) AS total_amount FROM loan WHERE status = 'B';",
+      "answer": "The combined value is 4,362,348.",
+      "gold_sql": "SELECT SUM(amount) FROM loan WHERE status = 'B'",
+      "expected": [
+        [
+          4362348
+        ]
+      ],
+      "returned": [
+        [
+          4362348
+        ]
+      ],
+      "match": true,
+      "shape_differs": false,
+      "first_attempt_ok": true,
+      "retries": 0,
+      "latency_s": 0.89,
+      "cost_usd": 0.000173
+    },
+    "s_06": {
+      "question": "What percentage of loans have a duration of 60 months? Round to 1 decimal.",
+      "tier": 2,
+      "status": "answer",
+      "sql": "SELECT ROUND(100.0 * SUM(CASE WHEN duration = 60 THEN 1 ELSE 0 END) / COUNT(*), 1) AS percentage FROM loan;",
+      "answer": "21.30% of loans have a duration of 60 months.",
+      "gold_sql": "SELECT ROUND(100.0 * SUM(CASE WHEN duration = 60 THEN 1 ELSE 0 END) / COUNT(*), 1) FROM loan",
+      "expected": [
+        [
+          21.3
+        ]
+      ],
+      "returned": [
+        [
+          21.3
+        ]
+      ],
+      "match": true,
+      "shape_differs": false,
+      "first_attempt_ok": true,
+      "retries": 0,
+      "latency_s": 1.03,
+      "cost_usd": 0.000515
+    },
+    "s_07": {
+      "question": "How many distinct clients own an account that gets weekly statements?",
+      "tier": 2,
+      "status": "answer",
+      "sql": "SELECT COUNT(DISTINCT d.client_id) AS weekly_owner_clients\nFROM disp d\nJOIN account a ON d.account_id = a.account_id\nWHERE d.type = 'OWNER' AND a.frequency = 'POPLATEK TYDNE';",
+      "answer": "240 distinct clients own an account that gets weekly statements.",
+      "gold_sql": "SELECT COUNT(DISTINCT dp.client_id) FROM disp dp JOIN account a ON dp.account_id = a.account_id WHERE dp.type = 'OWNER' AND a.frequency = 'POPLATEK TYDNE'",
+      "expected": [
+        [
+          240
+        ]
+      ],
+      "returned": [
+        [
+          240
+        ]
+      ],
+      "match": true,
+      "shape_differs": false,
+      "first_attempt_ok": true,
+      "retries": 0,
+      "latency_s": 1.62,
+      "cost_usd": 0.000597
+    },
+    "s_08": {
+      "question": "For each card type, count the cards issued during 1998. Show type and count, most first.",
+      "tier": 3,
+      "status": "answer",
+      "sql": "SELECT type, COUNT(*) AS count FROM card WHERE issued BETWEEN '1998-01-01' AND '1998-12-31' GROUP BY type ORDER BY count DESC;",
+      "answer": "3 rows: classic (326), junior (70), gold (53).",
+      "gold_sql": "SELECT type, COUNT(*) AS n FROM card WHERE strftime('%Y', issued) = '1998' GROUP BY type ORDER BY n DESC",
+      "expected": [
+        [
+          "classic",
+          326
+        ],
+        [
+          "junior",
+          70
+        ],
+        [
+          "gold",
+          53
+        ]
+      ],
+      "returned": [
+        [
+          "classic",
+          326
+        ],
+        [
+          "junior",
+          70
+        ],
+        [
+          "gold",
+          53
+        ]
+      ],
+      "match": true,
+      "shape_differs": false,
+      "first_attempt_ok": true,
+      "retries": 0,
+      "latency_s": 1.48,
+      "cost_usd": 0.000571
+    },
+    "s_09": {
+      "question": "Which 3 districts have the highest average loan amount? Show the district name and the average amount.",
+      "tier": 3,
+      "status": "answer",
+      "sql": "SELECT d.A2 AS district_name, AVG(l.amount) AS average_amount\nFROM loan l\nJOIN account a ON l.account_id = a.account_id\nJOIN district d ON a.district_id = d.district_id\nGROUP BY d.district_id, d.A2\nORDER BY average_amount DESC\nLIMIT 3;",
+      "answer": "The three districts are Nachod (294,730.00), Ceske Budejovice (251,365.50) and Beroun (243,466.00).",
+      "gold_sql": "SELECT d.A2, AVG(l.amount) AS avg_amount FROM loan l JOIN account a ON l.account_id = a.account_id JOIN district d ON a.district_id = d.district_id GROUP BY d.district_id, d.A2 ORDER BY avg_amount DESC LIMIT 3",
+      "expected": [
+        [
+          "Nachod",
+          294730.0
+        ],
+        [
+          "Ceske Budejovice",
+          251365.5
+        ],
+        [
+          "Beroun",
+          243466.0
+        ]
+      ],
+      "returned": [
+        [
+          "Nachod",
+          294730.0
+        ],
+        [
+          "Ceske Budejovice",
+          251365.5
+        ],
+        [
+          "Beroun",
+          243466.0
+        ]
+      ],
+      "match": true,
+      "shape_differs": false,
+      "first_attempt_ok": true,
+      "retries": 0,
+      "latency_s": 1.33,
+      "cost_usd": 0.000564
+    },
+    "s_10": {
+      "question": "How many accounts have both a standing order for insurance payments and a loan?",
+      "tier": 3,
+      "status": "answer",
+      "sql": "SELECT COUNT(DISTINCT a.account_id) AS count_accounts\nFROM account a\nWHERE EXISTS (\n    SELECT 1 FROM \"order\" o\n    WHERE o.account_id = a.account_id AND o.k_symbol = 'POJISTNE'\n) AND EXISTS (\n    SELECT 1 FROM loan l\n    WHERE l.account_id = a.account_id\n);",
+      "answer": "There are 114 accounts that have both a standing order for insurance payments and a loan.",
+      "gold_sql": "SELECT COUNT(DISTINCT o.account_id) FROM \"order\" o JOIN loan l ON o.account_id = l.account_id WHERE o.k_symbol = 'POJISTNE'",
+      "expected": [
+        [
+          114
+        ]
+      ],
+      "returned": [
+        [
+          114
+        ]
+      ],
+      "match": true,
+      "shape_differs": false,
+      "first_attempt_ok": true,
+      "retries": 0,
+      "latency_s": 1.43,
+      "cost_usd": 0.000551
+    }
+  }
+}

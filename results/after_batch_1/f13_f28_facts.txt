@@ -1,0 +1,27 @@
+# Facts for README (F-13/F-28), captured 2026-10-03 10:39
+download_data.sh URL: https://bird-bench.oss-cn-beijing.aliyuncs.com/dev.zip
+--- HEAD request only (no download):
+HTTP/1.1 200 OK
+Content-Type: application/zip
+Content-Length: 346207293
+--- download_data.sh prerequisites check:
+11:for cmd in uv curl unzip sqlite3; do
+--- download_data.sh checksum line:
+9:BIRD_DEV_SHA256="cdd6d19faeb45a23970b98d3ef6c40a87987c95459c2cf12076897a60cf5a630"
+--- data files shipped in the current ZIP build:
+71294976 data/financial.sqlite
+0 data/database_description/
+630 data/database_description/loan.csv
+252 data/database_description/client.csv
+1095 data/database_description/district.csv
+1155 data/database_description/trans.csv
+480 data/database_description/account.csv
+415 data/database_description/card.csv
+602 data/database_description/order.csv
+423 data/database_description/disp.csv
+--- on disk:
+71294976 data/financial.sqlite
+--- versions:
+requires-python = ">=3.11"
+uv 0.12.19 (Homebrew 2026-09-24 aarch64-apple-darwin)
+Python 3.14.7

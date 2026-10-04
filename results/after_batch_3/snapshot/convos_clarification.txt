@@ -1,0 +1,41 @@
+
+######## audit/convos/c9_answer_clarification.txt
+# user answers the clarifying question: context must carry and the answer must use the stated threshold
+  'How many big loans are there?'                              -> status=clarify type=new_topic switched=False tables=[] prompt_tok=2508 window=1
+        SQL:   rows=None  clarify='What minimum loan amount should be considered a "big" loan?'
+        PASS status=clarify (got clarify)
+  'bigger than 300000'                                         -> status=answer type=new_topic switched=False tables=['loan'] prompt_tok=2587 window=2
+        SQL: SELECT COUNT(*) AS loan_count FROM loan WHERE amount > 300000;  rows=[(82,)]
+        PASS status=answer (got answer)
+        PASS notice=no (got no)
+  'and how many of those have status A?'                       -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2643 window=3
+        SQL: SELECT COUNT(*) AS loan_count FROM loan WHERE amount > 300000 AND status = 'A';  rows=[(2,)]
+        PASS status=answer (got answer)
+        PASS notice=no (got no)
+  prompt tokens per turn: first=2508 last=2643 max=2643 n=3
+
+######## audit/convos/c10_ignore_clarification.txt
+# user ignores the clarification and asks something unrelated: must not get confused or stuck
+  'How many bad loans are there?'                              -> status=answer type=new_topic switched=False tables=['loan'] prompt_tok=2508 window=1
+        SQL: SELECT COUNT(*) AS bad_loan_count FROM loan WHERE status IN ('B', 'D');  rows=[(76,)]
+        FAIL status=clarify (got answer)
+  'How many gold cards are there?'                             -> status=answer type=new_topic switched=True tables=['card'] prompt_tok=2618 window=1
+        SQL: SELECT COUNT(*) AS gold_card_count FROM card WHERE type = 'gold';  rows=[(88,)]
+        PASS status=answer (got answer)
+  'How many loans have status D?'                              -> status=answer type=new_topic switched=True tables=['loan'] prompt_tok=2583 window=1
+        SQL: SELECT COUNT(*) AS d_loan_count FROM loan WHERE status = 'D';  rows=[(45,)]
+        PASS status=answer (got answer)
+  prompt tokens per turn: first=2508 last=2583 max=2618 n=3
+
+######## audit/convos/c11_clarify_then_option_number.txt
+# the CLI shows numbered options; does typing just "2" work?
+  'Show me the best clients.'                                  -> status=clarify type=new_topic switched=False tables=[] prompt_tok=2507 window=1
+        SQL:   rows=None  clarify='What criteria should be used to define the "best" clients?'
+        PASS status=clarify (got clarify)
+  '2'                                                          -> status=answer type=new_topic switched=False tables=['client', 'disp'] prompt_tok=2586 window=2
+        SQL: SELECT c.client_id, COUNT(DISTINCT d.account_id) AS account_count FROM client c JOIN disp d ON c.client_id = d.client_id WHERE d.type = 'OWN  rows=[(13998, 1), (13971, 1)]
+        PASS status=answer (got answer)
+        PASS notice=no (got no)
+  prompt tokens per turn: first=2507 last=2586 max=2586 n=2
+
+asserted checks: 10/11 passed

@@ -1,0 +1,2 @@
+crossjoin (3x trans)   http_calls= 1 wall=  10.2s  status=answer err='Query took longer than 10s and was stopped. Use a more selective filte' refusal=None rows=None
+slow35 (SDK timeout=30) http_calls= 2 wall=  30.4s  status=error err='Could not reach Fireworks (timeout or network problem). Try again.' refusal=None rows=None

@@ -1,0 +1,8 @@
+Same-day paired A/B: the frozen pre-fix code vs the current code, 2 runs each (question text omitted; ids only).
+
+== frozen
+dev 8 /10 | blind-30 answerable 29 /30 | ambiguous clarified 3 /3 | misses ['q_004', 'q_008', 'a15']
+dev 8 /10 | blind-30 answerable 29 /30 | ambiguous clarified 3 /3 | misses ['q_004', 'q_008', 'a15']
+== live
+dev 8 /10 | blind-30 answerable 28 /30 | ambiguous clarified 2 /3 | misses ['q_004', 'q_008', 'a12', 'a15']
+dev 8 /10 | blind-30 answerable 28 /30 | ambiguous clarified 2 /3 | misses ['q_004', 'q_008', 'a12', 'a15']

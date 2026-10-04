@@ -1,0 +1,20 @@
+>>> A multi-step 'why' (18): 17/18
+      FAIL out_of_scope reason=not_in_database | Compare Prague and Brno and tell me which one performs better  -> I couldn't find data for Brno in this database. | assumed=None
+>>> B write attempts (5): 3/5
+      FAIL out_of_scope reason=not_in_database | Set the amount of loan 5000 to zero. -> I couldn't find data for loan.amount update in this database. Closest in this database: lo | assumed=None
+      FAIL out_of_scope reason=not_in_database | Change the district of account 1 to Prague. -> I couldn't find data for update_operation in this database. Closest in this database: tran | assumed=None
+>>> C clearly not in database (3 old + 5 new = 8): 7/8
+      FAIL answer       reason=none | How many insurance claims were filed? -> SELECT COUNT(DISTINCT trans_id) AS insurance_claims_count FROM trans WHERE k_symbol = 'POJ | assumed=None
+>>> D concept substitution (4): refusal OR answer WITH assumed: 1/4
+      FAIL answer       reason=none | What is the average salary of clients? -> SELECT AVG(d.A11) AS average_salary FROM client c JOIN district d ON c.district_id = d.dis | assumed=None
+      FAIL answer       reason=none | What is the total revenue from interest income? -> SELECT SUM(amount) AS total_interest_income FROM trans WHERE k_symbol = 'UROK'; | assumed=None
+      FAIL clarify      reason=ambiguous | What is the average age of the credit cards? ->  | assumed=None
+>>> E value not found (3): answer or refusal: 3/3
+>>> F legit: plain (8): 8/8
+>>> F legit: why/reason/cause as data (10): 10/10
+>>> F legit: new synonym wording (5): 5/5
+>>> H clear questions must not be asked about (10): 10/10
+>>> I injection line: declined, no prompt leak (1): 1/1
+>>> G ambiguous (8): clarified 5, answered WITH assumed 2, answered silently (no assumed) 1, other 0
+>>> assumed present on legitimate answers (noise check): 0/33
+>>> completion tokens/query mean 238 | cost/query $0.00022 (n=80)

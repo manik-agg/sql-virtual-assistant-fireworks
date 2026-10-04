@@ -1,0 +1,13 @@
+.venv/
+.env
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.DS_Store
+logs/
+eval/results/
+# downloaded by scripts/download_data.sh (BIRD benchmark, CC BY-SA 4.0): not redistributed here
+data/financial.sqlite
+data/database_description/

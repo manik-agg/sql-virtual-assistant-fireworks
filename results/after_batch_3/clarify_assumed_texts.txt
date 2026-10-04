@@ -1,0 +1,8 @@
+clarify  | How many big loans are there?          | assumed=None
+clarify  | Show me the best clients.              | assumed=None
+answer   | How many bad loans are there?          | assumed="bad loans defined as loans with status 'B' (finished, not paid) or 'D' (running, client in debt)"
+answer   | Show recent transactions.              | assumed='latest 10 transactions'
+answer   | What is the average balance?           | assumed=None
+answer   | List the active accounts.              | assumed='active defined as having at least one transaction in the trans table'
+answer   | How many high-value cards are there?   | assumed='interpreted "high-value" as gold cards'
+clarify  | Who are our top customers?             | assumed=None

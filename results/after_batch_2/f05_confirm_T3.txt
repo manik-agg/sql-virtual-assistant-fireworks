@@ -1,0 +1,9 @@
+[T3] A2 multi-step (7): multi-step message: 7/7
+[T3] C2 not in database (4): 'couldn't find' message: 4/4
+[T3] D2 proxy (5): refusal OR assumed OR clarify (never a bare answer): 1/5
+      FAIL answer       reason=none | How many branches does the bank have? ->  | assumed=None
+      FAIL answer       reason=none | What is the average income of clients? ->  | assumed=None
+      FAIL answer       reason=none | What is the total profit from loans? ->  | assumed=None
+      FAIL answer       reason=none | Which clients are high risk? ->  | assumed=None
+[T3] F2 legit (6): answered: 6/6
+[T3] total 18/22

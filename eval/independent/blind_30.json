@@ -1,0 +1,299 @@
+[
+ {
+  "id": "a01",
+  "category": "simple filter",
+  "question": "How many male clients were born in 1960 or later?",
+  "gold_sql": "SELECT COUNT(*) FROM client WHERE gender='M' AND birth_date >= '1960-01-01'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a02",
+  "category": "aggregation",
+  "question": "What is the total amount of all loans with a duration of 60 months?",
+  "gold_sql": "SELECT SUM(amount) FROM loan WHERE duration=60",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a03",
+  "category": "aggregation",
+  "question": "What is the highest balance recorded in any transaction?",
+  "gold_sql": "SELECT MAX(balance) FROM trans",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a04",
+  "category": "group by",
+  "question": "How many loans are there for each repayment status? Show status and count, ordered by status.",
+  "gold_sql": "SELECT status, COUNT(*) FROM loan GROUP BY status ORDER BY status",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a05",
+  "category": "having",
+  "question": "Which regions have more than 600 accounts? Show the region and the number of accounts, ordered by the number of accounts descending.",
+  "gold_sql": "SELECT d.A3, COUNT(*) AS n FROM account a JOIN district d ON a.district_id=d.district_id GROUP BY d.A3 HAVING COUNT(*)>600 ORDER BY n DESC",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a06",
+  "category": "code column",
+  "question": "How many distinct accounts have a standing order for insurance payment?",
+  "gold_sql": "SELECT COUNT(DISTINCT account_id) FROM \"order\" WHERE k_symbol='POJISTNE'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a07",
+  "category": "join+date",
+  "question": "How many loans were granted to accounts that were opened in 1993?",
+  "gold_sql": "SELECT COUNT(*) FROM loan l JOIN account a ON l.account_id=a.account_id WHERE strftime('%Y', a.date)='1993'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a08",
+  "category": "top-N",
+  "question": "Which 3 accounts have the highest number of transactions? Show account id and the number of transactions.",
+  "gold_sql": "SELECT account_id, COUNT(*) AS n FROM trans GROUP BY account_id ORDER BY n DESC LIMIT 3",
+  "gold_confidence": "medium",
+  "note": "tie at rank 3 checked below",
+  "expect_status": null
+ },
+ {
+  "id": "a09",
+  "category": "ratio",
+  "question": "What share of loans have status 'A', as a percentage rounded to 2 decimals?",
+  "gold_sql": "SELECT ROUND(100.0*SUM(CASE WHEN status='A' THEN 1 ELSE 0 END)/COUNT(*),2) FROM loan",
+  "gold_confidence": "medium",
+  "note": "rounding-sensitive; question states the rounding",
+  "expect_status": null
+ },
+ {
+  "id": "a10",
+  "category": "date",
+  "question": "How many transactions happened in December 1996?",
+  "gold_sql": "SELECT COUNT(*) FROM trans WHERE strftime('%Y-%m', date)='1996-12'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a11",
+  "category": "NULL",
+  "question": "How many transactions have no operation recorded?",
+  "gold_sql": "SELECT COUNT(*) FROM trans WHERE operation IS NULL",
+  "gold_confidence": "medium",
+  "note": "NULL vs empty string checked below",
+  "expect_status": null
+ },
+ {
+  "id": "a12",
+  "category": "NULL/empty",
+  "question": "How many standing orders have no purpose (k_symbol) recorded?",
+  "gold_sql": "SELECT COUNT(*) FROM \"order\" WHERE k_symbol IS NULL OR TRIM(k_symbol)=''",
+  "gold_confidence": "medium",
+  "note": "NULL vs blank checked below",
+  "expect_status": null
+ },
+ {
+  "id": "a13",
+  "category": "code column",
+  "question": "How many transactions were credit card withdrawals?",
+  "gold_sql": "SELECT COUNT(*) FROM trans WHERE operation='VYBER KARTOU'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a14",
+  "category": "code column",
+  "question": "What is the total interest credited across all transactions?",
+  "gold_sql": "SELECT SUM(amount) FROM trans WHERE k_symbol='UROK'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a15",
+  "category": "code column",
+  "question": "How many accounts get their statement issued after each transaction?",
+  "gold_sql": "SELECT COUNT(*) FROM account WHERE frequency='POPLATEK PO OBRATU'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a16",
+  "category": "join 3",
+  "question": "How many female clients hold a classic card?",
+  "gold_sql": "SELECT COUNT(DISTINCT c.client_id) FROM card cd JOIN disp d ON cd.disp_id=d.disp_id JOIN client c ON d.client_id=c.client_id WHERE cd.type='classic' AND c.gender='F'",
+  "gold_confidence": "medium",
+  "note": "'hold' = card issued on a disposition of that client",
+  "expect_status": null
+ },
+ {
+  "id": "a17",
+  "category": "join",
+  "question": "What is the average salary of the district where account 1 is located?",
+  "gold_sql": "SELECT d.A11 FROM account a JOIN district d ON a.district_id=d.district_id WHERE a.account_id=1",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a18",
+  "category": "ranking",
+  "question": "Which district had the most committed crimes in 1996? Give the district name.",
+  "gold_sql": "SELECT A2 FROM district ORDER BY A16 DESC LIMIT 1",
+  "gold_confidence": "medium",
+  "note": "tie checked below",
+  "expect_status": null
+ },
+ {
+  "id": "a19",
+  "category": "evidence hint",
+  "question": "How many clients live in districts where the 1996 unemployment rate is above 5? Evidence: the 1996 unemployment rate is the district column A13.",
+  "gold_sql": "SELECT COUNT(*) FROM client c JOIN district d ON c.district_id=d.district_id WHERE d.A13 > 5",
+  "gold_confidence": "medium",
+  "note": "Evidence-style: A13 = unemployment 1996",
+  "expect_status": null
+ },
+ {
+  "id": "a20",
+  "category": "join+agg",
+  "question": "What is the average loan amount for loans on accounts owned by female clients?",
+  "gold_sql": "SELECT AVG(l.amount) FROM loan l JOIN disp d ON l.account_id=d.account_id AND d.type='OWNER' JOIN client c ON d.client_id=c.client_id WHERE c.gender='F'",
+  "gold_confidence": "medium",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a21",
+  "category": "having/subquery",
+  "question": "How many accounts have more than 500 transactions?",
+  "gold_sql": "SELECT COUNT(*) FROM (SELECT account_id FROM trans GROUP BY account_id HAVING COUNT(*)>500)",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a22",
+  "category": "percentage",
+  "question": "What percentage of accounts are located in the Prague region, rounded to 1 decimal?",
+  "gold_sql": "SELECT ROUND(100.0*SUM(CASE WHEN d.A3='Prague' THEN 1 ELSE 0 END)/COUNT(*),1) FROM account a JOIN district d ON a.district_id=d.district_id",
+  "gold_confidence": "medium",
+  "note": "rounding-sensitive; question states the rounding",
+  "expect_status": null
+ },
+ {
+  "id": "a23",
+  "category": "date arithmetic",
+  "question": "How many clients were younger than 30 on 31 December 1998?",
+  "gold_sql": "SELECT COUNT(*) FROM client WHERE birth_date > '1968-12-31'",
+  "gold_confidence": "medium",
+  "note": "age boundary: born after 1968-12-31",
+  "expect_status": null
+ },
+ {
+  "id": "a24",
+  "category": "top-N+join",
+  "question": "List the 5 districts with the most clients, with district name and client count.",
+  "gold_sql": "SELECT d.A2, COUNT(*) AS n FROM client c JOIN district d ON c.district_id=d.district_id GROUP BY d.district_id ORDER BY n DESC LIMIT 5",
+  "gold_confidence": "medium",
+  "note": "tie at rank 5 checked below",
+  "expect_status": null
+ },
+ {
+  "id": "a25",
+  "category": "multi-agg",
+  "question": "What are the minimum, maximum and average loan amounts?",
+  "gold_sql": "SELECT MIN(amount), MAX(amount), AVG(amount) FROM loan",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a26",
+  "category": "negation",
+  "question": "How many accounts have never had a loan?",
+  "gold_sql": "SELECT COUNT(*) FROM account WHERE account_id NOT IN (SELECT account_id FROM loan)",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a27",
+  "category": "distinct",
+  "question": "How many distinct partner banks appear in the transactions?",
+  "gold_sql": "SELECT COUNT(DISTINCT bank) FROM trans WHERE bank IS NOT NULL AND TRIM(bank)<>''",
+  "gold_confidence": "medium",
+  "note": "blank-bank handling checked below",
+  "expect_status": null
+ },
+ {
+  "id": "a28",
+  "category": "string match",
+  "question": "How many districts have a name starting with 'Brno'?",
+  "gold_sql": "SELECT COUNT(*) FROM district WHERE A2 LIKE 'Brno%'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "a29",
+  "category": "ranking",
+  "question": "Which account has the single largest transaction amount? Give the account id.",
+  "gold_sql": "SELECT account_id FROM trans ORDER BY amount DESC LIMIT 1",
+  "gold_confidence": "medium",
+  "note": "tie checked below",
+  "expect_status": null
+ },
+ {
+  "id": "a30",
+  "category": "enumeration",
+  "question": "How many standing orders are for household payments (SIPO)?",
+  "gold_sql": "SELECT COUNT(*) FROM \"order\" WHERE k_symbol='SIPO'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "x01",
+  "category": "ambiguous",
+  "question": "How many big loans are there?",
+  "gold_sql": null,
+  "gold_confidence": "n/a",
+  "note": "no threshold for 'big'",
+  "expect_status": "clarify"
+ },
+ {
+  "id": "x02",
+  "category": "ambiguous",
+  "question": "Show me the best clients.",
+  "gold_sql": null,
+  "gold_confidence": "n/a",
+  "note": "'best' undefined",
+  "expect_status": "clarify"
+ },
+ {
+  "id": "x03",
+  "category": "ambiguous",
+  "question": "How many bad loans are there?",
+  "gold_sql": null,
+  "gold_confidence": "n/a",
+  "note": "'bad' could be status B, D, or both",
+  "expect_status": "clarify"
+ }
+]

@@ -1,0 +1,9 @@
+{"id":"s_01","question":"Why is the number of loans in default so high?","expect":"out_of_scope"}
+{"id":"s_02","question":"Why did Prague accounts have more transactions than Brno in 1997, and what caused the difference?","expect":"out_of_scope"}
+{"id":"s_03","question":"Analyze what drives loan defaults and recommend how to reduce them.","expect":"out_of_scope"}
+{"id":"s_04","question":"Why is this count so high?","expect":"out_of_scope"}
+{"id":"s_05","question":"What is the root cause of the decline in transactions after 1996?","expect":"out_of_scope"}
+{"id":"s_06","question":"Which district has the highest count of loans in default?","expect":"answer"}
+{"id":"s_07","question":"Which district has the most accounts?","expect":"answer"}
+{"id":"s_08","question":"What is the average number of transactions per account?","expect":"answer"}
+{"id":"s_09","question":"How many loans are in default?","expect":"answer"}

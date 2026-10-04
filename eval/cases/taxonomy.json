@@ -1,0 +1,18 @@
+{
+  "q_004": "bad gold / presentation: gold applies ROUND(AVG,2) unasked; model returns the unrounded average (correct value)",
+  "q_008": "tie order (scorer): the same 14 rows as gold, but the two districts tied at 53 owners are listed in a different order and gold has ORDER BY; the SQL groups by name, gold by id. Not a wrong answer",
+  "h_07": "wrong filter value: filtered trans.type = 'VYBER' AND operation = 'VYBER' (type already means withdrawal, cash is in operation)",
+  "p_06": "ambiguous question / bad gold: with status codes documented the model excludes cancelled and refunded purchases from 'bought'; gold counts every purchase",
+  "p_12": "ambiguous question / bad gold: same cause as p_06 (model filters to paid or shipped purchases; gold does not)",
+  "q_002": "wrong filter value (only without column descriptions): loan status letter codes cannot be inferred from data",
+  "q_005": "hallucinated column (only without descriptions): used district.A10 instead of A11 for average salary",
+  "q_010": "wrong join / filter value (only without descriptions): status code and client-district meaning missing",
+  "h_05": "wrong filter value (only without descriptions): loan status D cannot be inferred",
+  "h_08": "extra column (strict scorer): returns region and the average, gold has only region; the region is right. Before the F-07 strict comparator this passed. Without descriptions it is also a wrong scope decision",
+  "h_16": "wrong scope decision (only without descriptions): same cause as h_08",
+  "h_17": "wrong filter value (only without descriptions): added status='A' to 'approved in 1996'",
+  "p_05": "wrong filter value (DDL only, no value profile): guessed 'cancelled' instead of code 'X'",
+  "p_10": "wrong filter value (DDL only, no value profile): guessed status text instead of code 'S'",
+  "p_11": "wrong filter value (DDL only, no value profile): guessed 'refunded' instead of code 'R'",
+  "a15": "wrong table: filtered trans.k_symbol = 'SLUZBY' instead of using account.frequency for statement issuance (3/3 runs, audit/heldout.json)"
+}

@@ -1,0 +1,28 @@
+WRITE requests (want: caught)
+   old=MISSED new=caught | Set client 12's district to 5
+   old=MISSED new=caught | Change account 77 frequency to monthly
+   old=MISSED new=caught | Replace the status of all loans with 'A'
+   old=MISSED new=caught | Please overwrite the amount of loan 20 with 1000
+   old=MISSED new=caught | Modify every card type to gold
+   old=MISSED new=caught | Edit row 5 of the client table
+   old=MISSED new=caught | Reset account 3 balance to zero
+   old=MISSED new=caught | Mark every loan as paid
+   old=caught new=caught | Drop table disp
+   old=MISSED new=caught | Add a new loan for account 1
+   old=MISSED new=caught | Erase all orders
+   old=MISSED new=caught | Could you set the gender of client 9 to M?
+   => caught: old 1/12  new 12/12
+READ look-alikes (want: NOT flagged)
+   old=ok      new=ok      | Change the grouping to monthly
+   old=ok      new=ok      | Set the minimum loan amount to 50000 and count loans
+   old=ok      new=ok      | Change the year to 1996
+   old=ok      new=ok      | Set the region filter to north Moravia
+   old=ok      new=ok      | Replace the district names with their codes in the output
+   old=ok      new=ok      | Modify the query to show only female clients
+   old=ok      new=FLAGGED | Change it to account 2000
+   old=ok      new=FLAGGED | Edit the previous query to use 1997
+   old=ok      new=ok      | Mark the five largest accounts as important in the list
+   old=ok      new=ok      | Add the amounts of all loans
+   old=ok      new=FLAGGED | Set all amounts to thousands in the output
+   old=ok      new=ok      | Change the order to loan amount
+   => falsely flagged: old 0/12  new 3/12

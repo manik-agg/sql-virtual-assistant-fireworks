@@ -1,0 +1,11 @@
+strict match 10/10, first attempt ok 10, median 1.32s, $0.004931
+s_01 PASS distinct_bank_codes: 13
+s_02 PASS The most issued card type is classic.
+s_03 PASS The average number of inhabitants of the districts in the south Moravia region is 146,784.93.
+s_04 PASS There are 1,690 accounts.
+s_05 PASS The combined value is 4,362,348.
+s_06 PASS 21.30% of loans have a duration of 60 months.
+s_07 PASS 240 distinct clients own an account that gets weekly statements.
+s_08 PASS 3 rows: classic (326), junior (70), gold (53).
+s_09 PASS The three districts are Nachod (294,730.00), Ceske Budejovice (251,365.50) and Beroun (243,466.00).
+s_10 PASS There are 114 accounts that have both a standing order for insurance payments and a loan.

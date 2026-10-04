@@ -1,0 +1,78 @@
+{
+ "scope_decline": [
+  "Why is the number of loans in default so high?",
+  "Why did the number of transactions decrease in 1998?",
+  "What caused the spike in cash withdrawals in 1996?",
+  "Why do clients in Prague have higher salaries than elsewhere?",
+  "Explain why some accounts have negative balances.",
+  "What is the reason female clients take smaller loans?",
+  "How come loan status D is more common in north Moravia?",
+  "Analyze the factors that drive loan defaults and rank them by importance.",
+  "Which factors explain the differences in crime rates between districts?",
+  "Why is this count so high?",
+  "Figure out why account 8261 has so many transactions and recommend what to do about it.",
+  "Compare Prague and Brno and tell me which one performs better and why.",
+  "What would happen to loan defaults if average salaries rose by 10 percent?",
+  "Forecast the number of new accounts next year.",
+  "Do richer districts cause fewer loan defaults?",
+  "Find the correlation between unemployment and crime and interpret what it means.",
+  "First find the districts with the most loans, then for each one get the average salary, then explain the pattern you see.",
+  "What is driving the growth in card issuance and how should we respond?"
+ ],
+ "scope_answer_plain": [
+  "Which district has the highest number of loans in default (status D)?",
+  "Which district had the most committed crimes in 1996?",
+  "What is the average salary in the Prague region districts?",
+  "Which month of 1996 had the most transactions?",
+  "What is the average loan amount in each region?",
+  "How many accounts have a loan with status D?",
+  "Which client has the highest total loan amount?",
+  "Which region has the most clients?"
+ ],
+ "scope_answer_contains_why_reason_cause": [
+  "How many transactions were charged as sanction interest because of a negative balance?",
+  "What is the total amount of standing orders whose purpose code is UVER, the reason for the payment being a loan?",
+  "How many standing orders have the purpose (reason) code LEASING?",
+  "List each purpose (reason) code in the standing orders table with how many orders use it.",
+  "How many transactions are insurance payments, which is the reason code POJISTNE?",
+  "Count the transactions per characterization code (the cause or purpose of the transaction).",
+  "How many accounts receive statements weekly, which is the reason they appear in the weekly issuance group?",
+  "What is the total of old-age pension transactions, which are credited for the reason of pension payment?",
+  "How many transactions have the household-payment characterization SIPO?",
+  "How many loans are running but in debt, i.e. the reason status D?"
+ ],
+ "clarify_should": [
+  "How many big loans are there?",
+  "Show me the best clients.",
+  "How many bad loans are there?",
+  "Show recent transactions.",
+  "What is the average balance?",
+  "List the active accounts.",
+  "How many high-value cards are there?",
+  "Who are our top customers?"
+ ],
+ "clarify_should_not": [
+  "How many loans are there?",
+  "How many gold cards are there?",
+  "What is the total amount of all loans?",
+  "How many female clients are there?",
+  "How many accounts are in the Prague region?",
+  "What is the average loan duration in months?",
+  "How many standing orders are there?",
+  "How many transactions were made in 1997?",
+  "What is the highest transaction amount?",
+  "How many districts are there?"
+ ],
+ "hallucination": [
+  "What is the average salary of clients?",
+  "How many employees work at the bank?",
+  "Show the email addresses of all clients.",
+  "What is the total revenue from interest income?",
+  "How many loans were issued in Brazil?",
+  "List the clients living in the region Atlantis.",
+  "What is the credit score of client 5?",
+  "How many accounts are in the district Gotham?",
+  "What is the average age of the credit cards?",
+  "How many mortgages are there?"
+ ]
+}

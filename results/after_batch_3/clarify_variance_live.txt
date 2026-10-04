@@ -1,0 +1,9 @@
+LIVE 5/5 clarify, 0 with Assumed | How many big loans are there?
+LIVE 5/5 clarify, 0 with Assumed | Show me the best clients.
+LIVE 0/5 clarify, 5 with Assumed | How many bad loans are there?
+LIVE 0/5 clarify, 5 with Assumed | Show recent transactions.
+LIVE 0/5 clarify, 0 with Assumed | What is the average balance?
+LIVE 0/5 clarify, 5 with Assumed | List the active accounts.
+LIVE 0/5 clarify, 5 with Assumed | How many high-value cards are there?
+LIVE 5/5 clarify, 0 with Assumed | Who are our top customers?
+LIVE TOTAL 15/40

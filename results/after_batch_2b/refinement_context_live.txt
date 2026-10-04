@@ -1,0 +1,6 @@
+   answer          | How many accounts are in the south Bohemia re -> Change the region to Prague                   | SELECT COUNT(DISTINCT a.account_id) AS account_count FROM ac
+   answer          | How many transactions does account 1 have?    -> Change it to account 2000                     | SELECT COUNT(*) AS transaction_count FROM trans WHERE accoun
+   answer          | List the ten largest loans                    -> Remove the loans below 1000 from the list     | SELECT loan_id, amount FROM loan WHERE amount >= 1000 ORDER 
+   clarify         | How many clients are in the Prague region?    -> Set the region to Brno                        | 
+   answer          | What is the total amount of loans?            -> Change that to the average amount instead     | SELECT AVG(amount) AS average_amount FROM loan;
+=> follow-up refinements falsely refused as read-only: 0/5

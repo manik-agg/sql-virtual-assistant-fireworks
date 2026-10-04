@@ -1,0 +1,33 @@
+=== --config s_ddl --suite shop
+== s_ddl/shop: 9/12 match
+   latency P50 1.10s P95 2.17s, cost/query $0.00028
+   MISS p_05 [wrong filter value (DDL only, no value profile): guessed 'ca]: How many purchases were cancelled? -> SELECT COUNT(*) AS cancelled_purchases FROM purchase WHERE st = 'cancelled';  
+   MISS p_10 [wrong filter value (DDL only, no value profile): guessed sta]: What is the total revenue from shipped purchases in 2024, af -> SELECT SUM(pl.qty * p.unit_price * (1 - pl.discount_pct / 100.0)) AS total_revenue
+   MISS p_11 [wrong filter value (DDL only, no value profile): guessed 're]: How many purchases were refunded? -> SELECT COUNT(*) AS refunded_purchases FROM purchase WHERE st = 'refunded';  
+== s_ddl/shop: 9/12 match
+   latency P50 0.96s P95 3.08s, cost/query $0.00016
+   MISS p_05 [wrong filter value (DDL only, no value profile): guessed 'ca]: How many purchases were cancelled? -> SELECT COUNT(*) AS cancelled_purchases FROM purchase WHERE st = 'cancelled';  
+   MISS p_10 [wrong filter value (DDL only, no value profile): guessed sta]: What is the total revenue from shipped purchases in 2024, af -> SELECT SUM(pl.qty * p.unit_price * (1 - pl.discount_pct / 100.0)) AS total_revenue
+   MISS p_11 [wrong filter value (DDL only, no value profile): guessed 're]: How many purchases were refunded? -> SELECT COUNT(*) AS refunded_purchases FROM purchase WHERE st = 'refunded';  
+== s_ddl/shop: 9/12 match
+   latency P50 1.50s P95 3.35s, cost/query $0.00016
+   MISS p_05 [wrong filter value (DDL only, no value profile): guessed 'ca]: How many purchases were cancelled? -> SELECT COUNT(*) AS cancelled_purchases FROM purchase WHERE st = 'cancelled';  
+   MISS p_10 [wrong filter value (DDL only, no value profile): guessed sta]: What is the total revenue from shipped purchases in 2024, af -> SELECT SUM(pl.qty * p.unit_price * (1 - pl.discount_pct / 100.0)) AS total_revenue
+   MISS p_11 [wrong filter value (DDL only, no value profile): guessed 're]: How many purchases were refunded? -> SELECT COUNT(*) AS refunded_purchases FROM purchase WHERE st = 'refunded';  
+=== --config retry --suite shop
+== retry/shop: 12/12 match
+   latency P50 1.37s P95 2.17s, cost/query $0.00015
+== retry/shop: 12/12 match
+   latency P50 1.24s P95 2.37s, cost/query $0.00015
+== retry/shop: 12/12 match
+   latency P50 1.01s P95 3.78s, cost/query $0.00015
+=== --config retry --suite shop --shop-docs
+== retry/shop: 11/12 match
+   latency P50 1.21s P95 2.55s, cost/query $0.00026
+   MISS p_06 [ambiguous question / bad gold: with status codes documented ]: What is the total quantity of items bought by customers from -> SELECT SUM(pl.qty) AS total_quantity
+== retry/shop: 11/12 match
+   latency P50 0.99s P95 3.00s, cost/query $0.00016
+   MISS p_06 [ambiguous question / bad gold: with status codes documented ]: What is the total quantity of items bought by customers from -> SELECT SUM(pl.qty) AS total_quantity
+== retry/shop: 11/12 match
+   latency P50 1.11s P95 3.55s, cost/query $0.00016
+   MISS p_06 [ambiguous question / bad gold: with status codes documented ]: What is the total quantity of items bought by customers from -> SELECT SUM(pl.qty) AS total_quantity

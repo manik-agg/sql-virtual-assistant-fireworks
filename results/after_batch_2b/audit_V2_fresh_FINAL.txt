@@ -1,0 +1,6 @@
+[V2] PROXY_fresh: flagged 0/3 bare proxy answers | LEGIT_fresh: flagged 1/17 legitimate answers (6% noise)
+      proxy  MISS What is the average age of our customers?            -> EXACT
+      proxy  MISS What is the total deposit amount held by each client -> EXACT
+      proxy  MISS What is the average monthly spend per account?       -> EXACT
+      NOISE  How many standing orders exist for each purpose code -> ASSUMES: standing orders = rows in "order" table.
+      audit call: median latency 0.46s, mean cost $0.00010, mean completion tokens 79

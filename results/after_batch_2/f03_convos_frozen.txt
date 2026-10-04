@@ -1,0 +1,238 @@
+
+######## audit/convos/c10_ignore_clarification.txt
+# user ignores the clarification and asks something unrelated: must not get confused or stuck
+  'How many bad loans are there?'                              -> status=clarify type=new_topic switched=False tables=[] prompt_tok=2330 window=1
+        SQL:   rows=None  clarify='Which loan statuses should be counted as bad loans?'
+        PASS status=clarify (got clarify)
+  'How many gold cards are there?'                             -> status=answer type=new_topic switched=True tables=['card'] prompt_tok=2417 window=1
+        SQL: SELECT COUNT(*) AS gold_card_count FROM card WHERE type = 'gold';  rows=[(88,)]
+        PASS status=answer (got answer)
+  'How many loans have status D?'                              -> status=answer type=new_topic switched=True tables=['loan'] prompt_tok=2405 window=1
+        SQL: SELECT COUNT(*) AS loan_status_D_count FROM loan WHERE status = 'D';  rows=[(45,)]
+        PASS status=answer (got answer)
+  prompt tokens per turn: first=2330 last=2405 max=2417 n=3
+
+######## audit/convos/c11_clarify_then_option_number.txt
+# the CLI shows numbered options; does typing just "2" work?
+  'Show me the best clients.'                                  -> status=clarify type=new_topic switched=False tables=[] prompt_tok=2329 window=1
+        SQL:   rows=None  clarify='What criteria should be used to define the "best" clients?'
+        PASS status=clarify (got clarify)
+  '2'                                                          -> status=answer type=follow_up switched=True tables=['client', 'disp'] prompt_tok=2406 window=1
+        SQL: SELECT c.client_id, COUNT(DISTINCT d.account_id) AS account_count FROM client c JOIN disp d ON c.client_id = d.client_id GROUP BY c.client_i  rows=[(13998, 1), (13971, 1)]
+        PASS status=answer (got answer)
+        FAIL notice=no (got yes)
+  prompt tokens per turn: first=2329 last=2406 max=2406 n=2
+
+######## audit/convos/c1_same_table_chain.txt
+# 5-turn same-table chain with pronouns and refinements
+  'How many clients are there?'                                -> status=answer type=new_topic switched=False tables=['client'] prompt_tok=2329 window=1
+        SQL: SELECT COUNT(DISTINCT client_id) AS client_count FROM client;  rows=[(5369,)]
+        PASS notice=no (got no)
+  'only the female ones'                                       -> status=answer type=follow_up switched=False tables=['client'] prompt_tok=2399 window=2
+        SQL: SELECT COUNT(DISTINCT client_id) AS female_client_count FROM client WHERE gender = 'F';  rows=[(2645,)]
+        PASS notice=no (got no)
+        PASS window=2 (got 2)
+  'how many of those were born before 1960?'                   -> status=answer type=follow_up switched=False tables=['client'] prompt_tok=2464 window=3
+        SQL: SELECT COUNT(DISTINCT client_id) AS female_before_1960 FROM client WHERE gender = 'F' AND birth_date < '1960-01-01';  rows=[(1562,)]
+        PASS notice=no (got no)
+        PASS window=3 (got 3)
+  'now show the same for male instead'                         -> status=answer type=follow_up switched=False tables=['client'] prompt_tok=2543 window=4
+        SQL: SELECT COUNT(DISTINCT client_id) AS male_before_1960 FROM client WHERE gender = 'M' AND birth_date < '1960-01-01';  rows=[(1660,)]
+        PASS notice=no (got no)
+        PASS window=4 (got 4)
+  'what about those born in 1970 or later?'                    -> status=answer type=follow_up switched=False tables=['client'] prompt_tok=2626 window=5
+        SQL: SELECT COUNT(DISTINCT client_id) AS male_1970_or_later FROM client WHERE gender = 'M' AND birth_date >= '1970-01-01';  rows=[(584,)]
+        PASS notice=no (got no)
+        PASS window=5 (got 5)
+  prompt tokens per turn: first=2329 last=2626 max=2626 n=5
+
+######## audit/convos/c2_ambiguous_followup.txt
+# ambiguous follow-up: nothing in the previous result has an "other one"
+  'How many gold cards are there?'                             -> status=answer type=new_topic switched=False tables=['card'] prompt_tok=2330 window=1
+        SQL: SELECT COUNT(*) AS gold_card_count FROM card WHERE type = 'gold';  rows=[(88,)]
+        PASS status=answer (got answer)
+  'what about the other one?'                                  -> status=clarify type=follow_up switched=False tables=[] prompt_tok=2404 window=2
+        SQL:   rows=None  clarify='Which card type would you like the count for?'
+        PASS status=clarify (got clarify)
+  prompt tokens per turn: first=2330 last=2404 max=2404 n=2
+
+######## audit/convos/c3_prior_result_value.txt
+# follow-up that depends on a VALUE from the previous result, not just the SQL
+  'Which account has the single largest transaction amount?'   -> status=answer type=new_topic switched=False tables=['trans'] prompt_tok=2332 window=1
+        SQL: SELECT account_id FROM trans WHERE amount = (SELECT MAX(amount) FROM trans);  rows=[(998,)]
+        PASS status=answer (got answer)
+  'What district is that account located in?'                  -> status=answer type=follow_up switched=False tables=['account', 'district'] prompt_tok=2407 window=2
+        SQL: SELECT d.A2 AS district_name FROM account a JOIN district d ON a.district_id = d.district_id WHERE a.account_id = 998;  rows=[('Pardubice',)]
+        PASS status=answer (got answer)
+        PASS notice=no (got no)
+  'How many loans does it have?'                               -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2481 window=3
+        SQL: SELECT COUNT(DISTINCT loan_id) AS loan_count FROM loan WHERE account_id = 998;  rows=[(0,)]
+        PASS status=answer (got answer)
+        PASS notice=no (got no)
+  prompt tokens per turn: first=2332 last=2481 max=2481 n=3
+
+######## audit/convos/c4_switch_and_keep.txt
+# hard topic switch -> non-blocking notice; /keep restores; follow-up then works on the restored topic
+  'How many female clients are there?'                         -> status=answer type=new_topic switched=False tables=['client'] prompt_tok=2330 window=1
+        SQL: SELECT COUNT(*) AS female_clients_count FROM client WHERE gender = 'F';  rows=[(2645,)]
+        PASS notice=no (got no)
+  'How many of them were born before 1950?'                    -> status=answer type=follow_up switched=False tables=['client'] prompt_tok=2410 window=2
+        SQL: SELECT COUNT(*) AS female_clients_before_1950 FROM client WHERE gender = 'F' AND birth_date < '1950-01-01';  rows=[(1084,)]
+        PASS notice=no (got no)
+        PASS window=2 (got 2)
+  'What is the total amount of standing orders for leasing?'   -> status=answer type=new_topic switched=True tables=['order'] prompt_tok=2491 window=1
+        SQL: SELECT SUM(amount) AS total_leasing_amount FROM "order" WHERE k_symbol = 'LEASING';  rows=[(759527.1,)]
+        PASS notice=yes (got yes)
+        PASS window=1 (got 1)
+  '/keep'                                                      -> [Previous context restored (3 turns).]  window=3
+        PASS window=3 (got 3)
+  'and how many of those clients are male?'                    -> status=answer type=follow_up switched=False tables=['client'] prompt_tok=2560 window=4
+        SQL: SELECT COUNT(*) AS male_clients_count FROM client WHERE gender = 'M';  rows=[(2724,)]
+        PASS status=answer (got answer)
+  prompt tokens per turn: first=2330 last=2560 max=2560 n=4
+
+######## audit/convos/c5_switch_back.txt
+# switch away and then back to the earlier topic (brief: back = another new topic, fresh context)
+  'How many loans are there?'                                  -> status=answer type=new_topic switched=False tables=['loan'] prompt_tok=2329 window=1
+        SQL: SELECT COUNT(*) AS loan_count FROM loan;  rows=[(682,)]
+        PASS notice=no (got no)
+  'How many gold cards are there?'                             -> status=answer type=new_topic switched=True tables=['card'] prompt_tok=2396 window=1
+        SQL: SELECT COUNT(*) AS gold_card_count FROM card WHERE type = 'gold';  rows=[(88,)]
+        PASS notice=yes (got yes)
+  'Back to loans: how many have status D?'                     -> status=answer type=new_topic switched=True tables=['loan'] prompt_tok=2408 window=1
+        SQL: SELECT COUNT(*) AS d_status_loan_count FROM loan WHERE status = 'D';  rows=[(45,)]
+        PASS notice=yes (got yes)
+  'and how many have status A?'                                -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2414 window=2
+        SQL: SELECT COUNT(*) AS a_status_loan_count FROM loan WHERE status = 'A';  rows=[(203,)]
+        PASS notice=no (got no)
+  prompt tokens per turn: first=2329 last=2414 max=2414 n=4
+
+######## audit/convos/c6_clear_reset.txt
+# /clear, plain phrase, /reset; window must be empty each time; /keep undoes only the last clear
+  'How many loans are there?'                                  -> status=answer type=new_topic switched=False tables=['loan'] prompt_tok=2329 window=1
+        SQL: SELECT COUNT(*) AS loan_count FROM loan;  rows=[(682,)]
+        PASS window=1 (got 1)
+  '/clear'                                                     -> [Context cleared. Type /keep to restore it.]  window=0
+        PASS window=0 (got 0)
+  'How many gold cards are there?'                             -> status=answer type=new_topic switched=False tables=['card'] prompt_tok=2330 window=1
+        SQL: SELECT COUNT(*) AS gold_card_count FROM card WHERE type = 'gold';  rows=[(88,)]
+        PASS window=1 (got 1)
+  'clear context'                                              -> [Context cleared. Type /keep to restore it.]  window=0
+        PASS window=0 (got 0)
+  'How many orders are there?'                                 -> status=answer type=new_topic switched=False tables=['order'] prompt_tok=2329 window=1
+        SQL: SELECT COUNT(*) AS order_count FROM "order";  rows=[(6471,)]
+        PASS window=1 (got 1)
+  '/reset'                                                     -> [Context cleared. Type /keep to restore it.]  window=0
+        PASS window=0 (got 0)
+  '/keep'                                                      -> [Previous context restored (1 turns).]  window=1
+        PASS window=1 (got 1)
+  prompt tokens per turn: first=2329 last=2329 max=2330 n=3
+
+######## audit/convos/c7_long_session.txt
+# long session: 34 turns, same tables, prompt tokens must stay bounded by the 5-turn window
+  'How many loans are there?'                                  -> status=answer type=new_topic switched=False tables=['loan'] prompt_tok=2329 window=1
+        SQL: SELECT COUNT(*) AS loan_count FROM loan;  rows=[(682,)]
+  'what is their total amount?'                                -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2395 window=2
+        SQL: SELECT SUM(amount) AS total_loan_amount FROM loan;  rows=[(103261740,)]
+  'how many have status A?'                                    -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2450 window=3
+        SQL: SELECT COUNT(*) AS count_status_A FROM loan WHERE status = 'A';  rows=[(203,)]
+  'what is the average duration?'                              -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2504 window=4
+        SQL: SELECT AVG(duration) AS avg_duration FROM loan WHERE status = 'A';  rows=[(22.226600985221676,)]
+  'how many have duration of 60 months?'                       -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2565 window=5
+        SQL: SELECT COUNT(*) AS count_duration_60 FROM loan WHERE duration = 60;  rows=[(145,)]
+  'what is the largest payment among them?'                    -> status=clarify type=follow_up switched=False tables=[] prompt_tok=2624 window=5
+        SQL:   rows=None  clarify='Do you want the largest payment among all loans or only among loans with a duration of 60 months?'
+  'How many loans are there?'                                  -> status=answer type=same_tables_new_question switched=False tables=['loan'] prompt_tok=2630 window=5
+        SQL: SELECT COUNT(*) AS loan_count FROM loan;  rows=[(682,)]
+  'what is their total amount?'                                -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2622 window=5
+        SQL: SELECT SUM(amount) AS total_amount FROM loan;  rows=[(103261740,)]
+  'how many have status A?'                                    -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2617 window=5
+        SQL: SELECT COUNT(*) AS count_status_A FROM loan WHERE status = 'A';  rows=[(203,)]
+  'what is the average duration?'                              -> status=answer type=same_tables_new_question switched=False tables=['loan'] prompt_tok=2613 window=5
+        SQL: SELECT AVG(duration) AS average_duration FROM loan;  rows=[(36.49266862170088,)]
+  'how many have duration of 60 months?'                       -> status=answer type=same_tables_new_question switched=False tables=['loan'] prompt_tok=2609 window=5
+        SQL: SELECT COUNT(*) AS count_duration_60 FROM loan WHERE duration = 60;  rows=[(145,)]
+  'what is the largest payment among them?'                    -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2613 window=5
+        SQL: SELECT MAX(payments) AS max_payment FROM loan;  rows=[(9910.0,)]
+  'How many loans are there?'                                  -> status=answer type=same_tables_new_question switched=False tables=['loan'] prompt_tok=2618 window=5
+        SQL: SELECT COUNT(*) AS loan_count FROM loan;  rows=[(682,)]
+  'what is their total amount?'                                -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2615 window=5
+        SQL: SELECT SUM(amount) AS total_amount FROM loan;  rows=[(103261740,)]
+  'how many have status A?'                                    -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2610 window=5
+        SQL: SELECT COUNT(*) AS count_status_A FROM loan WHERE status = 'A';  rows=[(203,)]
+  'what is the average duration?'                              -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2611 window=5
+        SQL: SELECT AVG(duration) AS avg_duration FROM loan;  rows=[(36.49266862170088,)]
+  'how many have duration of 60 months?'                       -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2607 window=5
+        SQL: SELECT COUNT(*) AS count_duration_60 FROM loan WHERE duration = 60;  rows=[(145,)]
+  'what is the largest payment among them?'                    -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2613 window=5
+        SQL: SELECT MAX(payments) AS max_payment FROM loan;  rows=[(9910.0,)]
+  'How many loans are there?'                                  -> status=answer type=same_tables_new_question switched=False tables=['loan'] prompt_tok=2618 window=5
+        SQL: SELECT COUNT(*) AS loan_count FROM loan;  rows=[(682,)]
+  'what is their total amount?'                                -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2615 window=5
+        SQL: SELECT SUM(amount) AS total_amount FROM loan;  rows=[(103261740,)]
+  'how many have status A?'                                    -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2610 window=5
+        SQL: SELECT COUNT(*) AS count_status_A FROM loan WHERE status = 'A';  rows=[(203,)]
+  'what is the average duration?'                              -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2611 window=5
+        SQL: SELECT AVG(duration) AS avg_duration FROM loan;  rows=[(36.49266862170088,)]
+  'how many have duration of 60 months?'                       -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2607 window=5
+        SQL: SELECT COUNT(*) AS count_duration_60 FROM loan WHERE duration = 60;  rows=[(145,)]
+  'what is the largest payment among them?'                    -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2613 window=5
+        SQL: SELECT MAX(payments) AS max_payment FROM loan;  rows=[(9910.0,)]
+  'How many loans are there?'                                  -> status=answer type=same_tables_new_question switched=False tables=['loan'] prompt_tok=2618 window=5
+        SQL: SELECT COUNT(*) AS loan_count FROM loan;  rows=[(682,)]
+  'what is their total amount?'                                -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2615 window=5
+        SQL: SELECT SUM(amount) AS total_amount FROM loan;  rows=[(103261740,)]
+  'how many have status A?'                                    -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2610 window=5
+        SQL: SELECT COUNT(*) AS count_status_A FROM loan WHERE status = 'A';  rows=[(203,)]
+  'what is the average duration?'                              -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2611 window=5
+        SQL: SELECT AVG(duration) AS avg_duration FROM loan;  rows=[(36.49266862170088,)]
+  'how many have duration of 60 months?'                       -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2607 window=5
+        SQL: SELECT COUNT(*) AS count_duration_60 FROM loan WHERE duration = 60;  rows=[(145,)]
+  'what is the largest payment among them?'                    -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2613 window=5
+        SQL: SELECT MAX(payments) AS max_payment FROM loan;  rows=[(9910.0,)]
+  'How many loans are there?'                                  -> status=answer type=same_tables_new_question switched=False tables=['loan'] prompt_tok=2618 window=5
+        SQL: SELECT COUNT(*) AS loan_count FROM loan;  rows=[(682,)]
+  'what is their total amount?'                                -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2615 window=5
+        SQL: SELECT SUM(amount) AS total_amount FROM loan;  rows=[(103261740,)]
+  'how many have status A?'                                    -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2610 window=5
+        SQL: SELECT COUNT(*) AS count_status_A FROM loan WHERE status = 'A';  rows=[(203,)]
+  'what is the average duration?'                              -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2611 window=5
+        SQL: SELECT AVG(duration) AS avg_duration FROM loan;  rows=[(36.49266862170088,)]
+  prompt tokens per turn: first=2329 last=2611 max=2630 n=34
+
+######## audit/convos/c8_false_and_missed_switch.txt
+# false switch: same table, very different phrasing, no pronouns
+  'How many loans are there?'                                  -> status=answer type=new_topic switched=False tables=['loan'] prompt_tok=2329 window=1
+        SQL: SELECT COUNT(*) AS loan_count FROM loan;  rows=[(682,)]
+        PASS notice=no (got no)
+  'What is the biggest sum anyone has borrowed?'               -> status=answer type=same_tables_new_question switched=False tables=['loan'] prompt_tok=2398 window=2
+        SQL: SELECT MAX(amount) AS max_borrowed FROM loan;  rows=[(590820,)]
+        PASS notice=no (got no)
+  'And what is the typical repayment period?'                  -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2454 window=3
+        SQL: SELECT AVG(duration) AS avg_duration FROM loan;  rows=[(36.49266862170088,)]
+        PASS notice=no (got no)
+# missed switch? new tables (client) but similar words (district), previous was account+district
+  'How many accounts are there per district?'                  -> status=answer type=new_topic switched=True tables=['account', 'district'] prompt_tok=2509 window=1
+        SQL: SELECT d.A2 AS district_name, COUNT(*) AS account_count FROM account a JOIN district d ON a.district_id = d.district_id GROUP BY d.district_  rows=[('Hl.m. Praha', 554), ('Benesov', 42)]
+        PASS notice=yes (got yes)
+  'How many clients live in each district?'                    -> status=answer type=new_topic switched=False tables=['client', 'district'] prompt_tok=2421 window=2
+        SQL: SELECT d.A2 AS district_name, COUNT(*) AS client_count FROM client c JOIN district d ON c.district_id = d.district_id GROUP BY d.district_id  rows=[('Hl.m. Praha', 663), ('Benesov', 46)]
+        FAIL notice=yes (got no)
+  prompt tokens per turn: first=2329 last=2421 max=2509 n=5
+
+######## audit/convos/c9_answer_clarification.txt
+# user answers the clarifying question: context must carry and the answer must use the stated threshold
+  'How many big loans are there?'                              -> status=clarify type=new_topic switched=False tables=[] prompt_tok=2330 window=1
+        SQL:   rows=None  clarify='What defines a "big" loan in your question?'
+        PASS status=clarify (got clarify)
+  'bigger than 300000'                                         -> status=answer type=follow_up switched=True tables=['loan'] prompt_tok=2413 window=1
+        SQL: SELECT COUNT(*) AS big_loan_count FROM loan WHERE amount > 300000;  rows=[(82,)]
+        PASS status=answer (got answer)
+        FAIL notice=no (got yes)
+  'and how many of those have status A?'                       -> status=answer type=follow_up switched=False tables=['loan'] prompt_tok=2409 window=2
+        SQL: SELECT COUNT(*) AS big_loan_status_A_count FROM loan WHERE amount > 300000 AND status = 'A';  rows=[(2,)]
+        PASS status=answer (got answer)
+        PASS notice=no (got no)
+  prompt tokens per turn: first=2330 last=2409 max=2413 n=3
+
+asserted checks: 47/50 passed

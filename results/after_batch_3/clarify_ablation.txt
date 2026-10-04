@@ -1,0 +1,4 @@
+current                  9/24  per question [3, 3, 0, 0, 0, 0, 0, 3]
+no_open_choice_clause    12/24  per question [3, 3, 0, 0, 0, 3, 0, 3]
+no_assumed_sentence      15/24  per question [3, 3, 3, 3, 0, 0, 0, 3]
+clarify_rule_stronger    15/24  per question [3, 3, 3, 0, 0, 3, 0, 3]

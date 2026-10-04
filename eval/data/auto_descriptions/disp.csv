@@ -1,0 +1,5 @@
+original_column_name,column_name,column_description,data_format,value_description
+disp_id,,Unique identifier for each record in the disp table (primary key).,,
+client_id,,Identifier of the client; references client.client_id (foreign key).,,
+account_id,,Identifier of the account; references account.account_id (foreign key).,,
+type,,"Role of the client for the account. Codes observed: ""OWNER"" – client is the account owner; ""DISPONENT"" – client is a designated disponent (authorized user) of the account.",,

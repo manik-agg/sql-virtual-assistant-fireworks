@@ -1,0 +1,8 @@
+dev (question text only)                          10 questions, flagged as write requests: 0 
+heldout.json                                      33 questions, flagged as write requests: 0 
+heldout_v2.json                                   15 questions, flagged as write requests: 0 
+eval/cases heldout_sql                            22 questions, flagged as write requests: 0 
+behavior: legit + clarify + hallucination         46 questions, flagged as write requests: 0 
+reason sets: legit synonyms + proxy + not-in-db   27 questions, flagged as write requests: 0 
+multi-step 'why' questions                        25 questions, flagged as write requests: 0 
+TOTAL: 0 of 178 real questions flagged

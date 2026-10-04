@@ -1,0 +1,8 @@
+
+=== AGENT  (eval_agent_gpt-oss-120b_1790835642.json; 3 rep(s))
+  dev                                correct [9, 9, 9] /10  (pooled 27/30 = 90%, 95% CI 74-97%)  executed [10, 10, 10]  first-attempt-ok [10, 10, 10]
+                                     latency P50 4.28s P95 10.54s max 11.73s | tokens in/cached/out per q 2342/1242/261 | cost/q $0.00034
+  heldout-answerable                 correct [28, 28, 28] /30  (pooled 84/90 = 93%, 95% CI 86-97%)  executed [30, 30, 30]  first-attempt-ok [30, 30, 30]
+                                     latency P50 3.52s P95 9.66s max 11.63s | tokens in/cached/out per q 2337/1603/208 | cost/q $0.00026
+  heldout-ambiguous(expect clarify)  correct [3, 3, 3] /3  (pooled 9/9 = 100%, 95% CI 70-100%)  executed [0, 0, 0]  first-attempt-ok [3, 3, 3]
+  per-question pass across reps: q_001:PPP  q_002:PPP  q_003:PPP  q_004:...  q_005:PPP  q_006:PPP  q_007:PPP  q_008:PPP  q_009:PPP  q_010:PPP  a01:PPP  a02:PPP  a03:PPP  a04:PPP  a05:PPP  a06:PPP  a07:PPP  a08:PPP  a09:PPP  a10:PPP  a11:PPP  a12:...  a13:PPP  a14:PPP  a15:...  a16:PPP  a17:PPP  a18:PPP  a19:PPP  a20:PPP  a21:PPP  a22:PPP  a23:PPP  a24:PPP  a25:PPP  a26:PPP  a27:PPP  a28:PPP  a29:PPP  a30:PPP  x01:PPP  x02:PPP  x03:PPP

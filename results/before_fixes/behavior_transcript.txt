@@ -1,0 +1,74 @@
+[scope_decline ] ok   out_of_scope Why is the number of loans in default so high?                         -> 
+[scope_decline ] ok   out_of_scope Why did the number of transactions decrease in 1998?                   -> 
+[scope_decline ] ok   out_of_scope What caused the spike in cash withdrawals in 1996?                     -> 
+[scope_decline ] ok   out_of_scope Why do clients in Prague have higher salaries than elsewhere?          -> 
+[scope_decline ] ok   out_of_scope Explain why some accounts have negative balances.                      -> 
+[scope_decline ] ok   out_of_scope What is the reason female clients take smaller loans?                  -> 
+[scope_decline ] ok   out_of_scope How come loan status D is more common in north Moravia?                -> 
+[scope_decline ] ok   out_of_scope Analyze the factors that drive loan defaults and rank them by importan -> 
+[scope_decline ] ok   out_of_scope Which factors explain the differences in crime rates between districts -> 
+[scope_decline ] ok   out_of_scope Why is this count so high?                                             -> 
+[scope_decline ] ok   out_of_scope Figure out why account 8261 has so many transactions and recommend wha -> 
+[scope_decline ] MISS clarify      Compare Prague and Brno and tell me which one performs better and why. -> Which metric would you like to use to compare the performance of Prague and Brno?
+[scope_decline ] ok   out_of_scope What would happen to loan defaults if average salaries rose by 10 perc -> 
+[scope_decline ] ok   out_of_scope Forecast the number of new accounts next year.                         -> 
+[scope_decline ] ok   out_of_scope Do richer districts cause fewer loan defaults?                         -> 
+[scope_decline ] ok   out_of_scope Find the correlation between unemployment and crime and interpret what -> 
+[scope_decline ] ok   out_of_scope First find the districts with the most loans, then for each one get th -> 
+[scope_decline ] ok   out_of_scope What is driving the growth in card issuance and how should we respond? -> 
+   >>> scope_decline: 17/18 as expected (out_of_scope)
+
+[scope_answer_p] ok   answer       Which district has the highest number of loans in default (status D)?  -> SELECT d.A2 AS district_name, COUNT(*) AS loan_count FROM loan l JOIN account a ON l.account_id = a.account_id
+[scope_answer_p] ok   answer       Which district had the most committed crimes in 1996?                  -> SELECT A2 AS district_name, A16 AS crimes_1996 FROM district ORDER BY A16 DESC LIMIT 1;
+[scope_answer_p] ok   answer       What is the average salary in the Prague region districts?             -> SELECT AVG(A11) AS average_salary FROM district WHERE A3 = 'Prague';
+[scope_answer_p] ok   answer       Which month of 1996 had the most transactions?                         -> SELECT strftime('%m', date) AS month, COUNT(*) AS transaction_count FROM trans WHERE strftime('%Y', date) = '1
+[scope_answer_p] ok   answer       What is the average loan amount in each region?                        -> SELECT d.A3 AS region, AVG(l.amount) AS average_loan_amount FROM loan l JOIN account a ON l.account_id = a.acc
+[scope_answer_p] ok   answer       How many accounts have a loan with status D?                           -> SELECT COUNT(DISTINCT account_id) AS count_accounts FROM loan WHERE status = 'D';
+[scope_answer_p] ok   answer       Which client has the highest total loan amount?                        -> SELECT c.client_id, SUM(l.amount) AS total_loan FROM client c JOIN disp d ON d.client_id = c.client_id AND d.t
+[scope_answer_p] ok   answer       Which region has the most clients?                                     -> SELECT d.A3 AS region, COUNT(DISTINCT c.client_id) AS client_count FROM client c JOIN district d ON c.district
+   >>> scope_answer_plain: 8/8 as expected (answer)
+
+[scope_answer_c] ok   answer       How many transactions were charged as sanction interest because of a n -> SELECT COUNT(*) AS sanction_interest_transactions FROM trans WHERE k_symbol = 'SANKC. UROK';
+[scope_answer_c] ok   answer       What is the total amount of standing orders whose purpose code is UVER -> SELECT SUM(amount) AS total_amount FROM "order" WHERE k_symbol = 'UVER';
+[scope_answer_c] ok   answer       How many standing orders have the purpose (reason) code LEASING?       -> SELECT COUNT(*) AS count FROM "order" WHERE k_symbol = 'LEASING';
+[scope_answer_c] ok   answer       List each purpose (reason) code in the standing orders table with how  -> SELECT k_symbol AS purpose_code, COUNT(*) AS order_count FROM "order" GROUP BY k_symbol;
+[scope_answer_c] ok   answer       How many transactions are insurance payments, which is the reason code -> SELECT COUNT(*) AS insurance_payment_count FROM trans WHERE k_symbol = 'POJISTNE';
+[scope_answer_c] ok   answer       Count the transactions per characterization code (the cause or purpose -> SELECT k_symbol, COUNT(*) AS transaction_count FROM trans GROUP BY k_symbol;
+[scope_answer_c] ok   answer       How many accounts receive statements weekly, which is the reason they  -> SELECT COUNT(*) AS weekly_accounts FROM account WHERE frequency = 'POPLATEK TYDNE';
+[scope_answer_c] ok   answer       What is the total of old-age pension transactions, which are credited  -> SELECT SUM(amount) AS total_pension FROM trans WHERE type = 'PRIJEM' AND k_symbol = 'DUCHOD';
+[scope_answer_c] ok   answer       How many transactions have the household-payment characterization SIPO -> SELECT COUNT(DISTINCT trans_id) AS sipo_transaction_count FROM trans WHERE k_symbol = 'SIPO';
+[scope_answer_c] ok   answer       How many loans are running but in debt, i.e. the reason status D?      -> SELECT COUNT(DISTINCT loan_id) AS loan_count FROM loan WHERE status = 'D';
+   >>> scope_answer_contains_why_reason_cause: 10/10 as expected (answer)
+
+[clarify_should] ok   clarify      How many big loans are there?                                          -> What defines a "big" loan in this context?
+[clarify_should] ok   clarify      Show me the best clients.                                              -> What criteria should be used to define the "best" clients?
+[clarify_should] ok   clarify      How many bad loans are there?                                          -> Which loan statuses should be counted as bad loans?
+[clarify_should] MISS answer       Show recent transactions.                                              -> SELECT trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account FROM trans ORDER 
+[clarify_should] MISS answer       What is the average balance?                                           -> SELECT AVG(balance) AS average_balance FROM trans;
+[clarify_should] ok   clarify      List the active accounts.                                              -> What definition should be used for "active accounts"?
+[clarify_should] MISS answer       How many high-value cards are there?                                   -> SELECT COUNT(*) AS high_value_card_count FROM card WHERE type = 'gold';
+[clarify_should] ok   clarify      Who are our top customers?                                             -> What criteria should be used to define the 'top customers'?
+   >>> clarify_should: 5/8 as expected (clarify)
+
+[clarify_should] ok   answer       How many loans are there?                                              -> SELECT COUNT(*) AS loan_count FROM loan;
+[clarify_should] ok   answer       How many gold cards are there?                                         -> SELECT COUNT(*) AS gold_card_count FROM card WHERE type = 'gold';
+[clarify_should] ok   answer       What is the total amount of all loans?                                 -> SELECT SUM(amount) AS total_amount FROM loan;
+[clarify_should] ok   answer       How many female clients are there?                                     -> SELECT COUNT(*) AS female_clients_count FROM client WHERE gender = 'F';
+[clarify_should] ok   answer       How many accounts are in the Prague region?                            -> SELECT COUNT(DISTINCT a.account_id) AS account_count FROM account a JOIN district d ON a.district_id = d.distr
+[clarify_should] ok   answer       What is the average loan duration in months?                           -> SELECT AVG(duration) AS average_loan_duration_months FROM loan;
+[clarify_should] ok   answer       How many standing orders are there?                                    -> SELECT COUNT(*) AS order_count FROM "order";
+[clarify_should] ok   answer       How many transactions were made in 1997?                               -> SELECT COUNT(*) AS transaction_count FROM trans WHERE strftime('%Y', date) = '1997';
+[clarify_should] ok   answer       What is the highest transaction amount?                                -> SELECT MAX(amount) AS max_amount FROM trans;
+[clarify_should] ok   answer       How many districts are there?                                          -> SELECT COUNT(DISTINCT district_id) AS district_count FROM district;
+   >>> clarify_should_not: 10/10 as expected (answer)
+
+[hallucination ]  answer       What is the average salary of clients?                                 -> SELECT AVG(d.A11) AS average_salary FROM client c JOIN district d ON c.district_id = d.district_id;
+[hallucination ]  out_of_scope How many employees work at the bank?                                   -> 
+[hallucination ]  out_of_scope Show the email addresses of all clients.                               -> 
+[hallucination ]  answer       What is the total revenue from interest income?                        -> SELECT SUM(amount) AS total_interest_income FROM trans WHERE k_symbol = 'UROK';
+[hallucination ]  out_of_scope How many loans were issued in Brazil?                                  -> 
+[hallucination ]  answer       List the clients living in the region Atlantis.                        -> SELECT c.client_id, c.gender, c.birth_date, c.district_id FROM client c JOIN district d ON c.district_id = d.d
+[hallucination ]  out_of_scope What is the credit score of client 5?                                  -> 
+[hallucination ]  answer       How many accounts are in the district Gotham?                          -> SELECT COUNT(DISTINCT a.account_id) AS account_count FROM account a JOIN district d ON a.district_id = d.distr
+[hallucination ]  answer       What is the average age of the credit cards?                           -> SELECT AVG(strftime('%Y', '1998-12-31') - strftime('%Y', issued)) AS average_age_years FROM card;
+[hallucination ]  answer       How many mortgages are there?                                          -> SELECT COUNT(DISTINCT loan_id) AS mortgage_count FROM loan;

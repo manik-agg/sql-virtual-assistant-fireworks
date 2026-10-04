@@ -1,0 +1,29 @@
+ok         | identical                                                  | got=True want=True
+ok         | rows reordered, gold unordered                             | got=True want=True
+ok         | rows reordered, gold ORDER BY                              | got=False want=False
+ok         | columns swapped (b,a) vs (a,b)                             | got=False want=False
+ok         | extra column appended                                      | got=False want=False
+ok         | duplicate row added                                        | got=False want=False
+ok         | duplicate rows vs distinct (COUNT vs COUNT DISTINCT)       | got=False want=False
+ok         | float tiny diff                                            | got=True want=True
+ok         | float rounded to 2dp vs gold unrounded                     | got=False want=False
+ok         | float unrounded vs gold rounded 2dp (the q_004 case)       | got=False want=False
+ok         | int vs float same value                                    | got=True want=True
+ok         | string case differs (F vs f)                               | got=False want=False
+ok         | string whitespace differs                                  | got=False want=False
+ok         | NULL vs 0                                                  | got=False want=False
+ok         | NULL vs empty string                                       | got=False want=False
+ok         | NULL vs NULL                                               | got=True want=True
+ok         | string '1' vs int 1                                        | got=False want=False
+ok         | empty vs empty                                             | got=True want=True
+ok         | empty vs one row                                           | got=False want=False
+ok         | fewer rows (top-N too short)                               | got=False want=False
+ok         | wrong values same shape                                    | got=False want=False
+ok         | subset trick: pred has extra col that coincides            | got=False want=False
+ok         | scalar swapped for other scalar w/ same digits as string   | got=False want=False
+ok         | bool-like 1/True                                           | got=True want=True
+ok         | negative zero                                              | got=True want=True
+ok         | huge ints differ by 1                                      | got=False want=False
+ok         | float within 1e-7 relative but different business value    | got=False want=False
+
+false passes: 0, false fails: 0, of 27

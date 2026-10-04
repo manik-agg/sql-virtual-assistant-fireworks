@@ -1,0 +1,7 @@
+original_column_name,column_name,column_description,data_format,value_description
+order_id,,Unique identifier for the order/transaction (primary key).,,
+account_id,,Identifier of the originating account (foreign key to the account table).,,
+bank_to,,Destination bank code (two‑letter identifier).,,
+account_to,,Destination account number in the receiving bank.,,
+amount,,Monetary amount of the order (currency not specified).,,
+k_symbol,,Transaction purpose or type code (k‑symbol); may be empty when not provided.,,

@@ -1,0 +1,1 @@
+144 SQLs; COUNT(DISTINCT <id>): 41; of which with no join at all: 10

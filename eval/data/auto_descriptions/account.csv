@@ -1,0 +1,5 @@
+original_column_name,column_name,column_description,data_format,value_description
+account_id,,Unique identifier for each account record (primary key).,,
+district_id,,Identifier of the district to which the account belongs; references the district table.,,
+frequency,,"Payment frequency for the account. Code ""POPLATEK MESICNE"" likely means a monthly payment.",,
+date,,"Date associated with the account (e.g., creation or activation date).",,

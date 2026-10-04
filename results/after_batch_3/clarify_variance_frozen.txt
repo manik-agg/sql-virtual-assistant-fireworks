@@ -1,0 +1,9 @@
+FROZEN 5/5 clarify, 0 with Assumed | How many big loans are there?
+FROZEN 5/5 clarify, 0 with Assumed | Show me the best clients.
+FROZEN 5/5 clarify, 0 with Assumed | How many bad loans are there?
+FROZEN 0/5 clarify, 0 with Assumed | Show recent transactions.
+FROZEN 0/5 clarify, 0 with Assumed | What is the average balance?
+FROZEN 5/5 clarify, 0 with Assumed | List the active accounts.
+FROZEN 0/5 clarify, 0 with Assumed | How many high-value cards are there?
+FROZEN 5/5 clarify, 0 with Assumed | Who are our top customers?
+FROZEN TOTAL 25/40

@@ -1,0 +1,14 @@
+[T4] A2 multi-step (7): multi-step message: 3/7
+      FAIL answer       reason=none | Why are some districts richer than others? ->  | assumed=ranking districts by average salary as a proxy for wealth
+      FAIL answer       reason=none | Which factors make a client more likely to default on a loan ->  | assumed=Default considered as loan status B (finished unpaid) or D (running debt). Factors examined via aggregation of client age, gender ratio, region, account payment
+      FAIL answer       reason=none | Recommend which district we should focus on to grow the numb ->  | assumed=None
+      FAIL out_of_scope reason=not_in_database | Why do customers complain so much? -> I couldn't find data for customer complaints in this database. | assumed=None
+[T4] C2 not in database (4): 'couldn't find' message: 4/4
+[T4] D2 proxy (5): refusal OR assumed OR clarify (never a bare answer): 0/5
+      FAIL answer       reason=none | How many branches does the bank have? ->  | assumed=None
+      FAIL answer       reason=none | What is the average income of clients? ->  | assumed=None
+      FAIL answer       reason=none | How many premium customers are there? ->  | assumed=None
+      FAIL answer       reason=none | What is the total profit from loans? ->  | assumed=None
+      FAIL answer       reason=none | Which clients are high risk? ->  | assumed=None
+[T4] F2 legit (6): answered: 6/6
+[T4] total 13/22

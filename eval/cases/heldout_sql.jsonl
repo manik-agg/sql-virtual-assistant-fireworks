@@ -1,0 +1,22 @@
+{"id":"h_01","question":"How many clients are female?","gold_sql":"SELECT COUNT(*) FROM client WHERE gender='F'"}
+{"id":"h_02","question":"How many gold credit cards have been issued?","gold_sql":"SELECT COUNT(*) FROM card WHERE type='gold'"}
+{"id":"h_03","question":"How many accounts have weekly statement issuance?","gold_sql":"SELECT COUNT(*) FROM account WHERE frequency='POPLATEK TYDNE'"}
+{"id":"h_04","question":"What is the largest single loan amount?","gold_sql":"SELECT MAX(amount) FROM loan"}
+{"id":"h_05","question":"How many loans are running but the client is in debt?","gold_sql":"SELECT COUNT(*) FROM loan WHERE status='D'"}
+{"id":"h_06","question":"What is the average loan duration in months for loans with status A?","gold_sql":"SELECT AVG(duration) FROM loan WHERE status='A'"}
+{"id":"h_07","question":"How many transactions were withdrawals in cash in 1996?","gold_sql":"SELECT COUNT(*) FROM trans WHERE operation='VYBER' AND strftime('%Y',date)='1996'"}
+{"id":"h_08","question":"Which region has the highest average salary among its districts, counting each district once?","gold_sql":"SELECT A3 FROM district GROUP BY A3 ORDER BY AVG(A11) DESC LIMIT 1"}
+{"id":"h_09","question":"How many districts are in the north Moravia region?","gold_sql":"SELECT COUNT(*) FROM district WHERE A3='north Moravia'"}
+{"id":"h_10","question":"What is the total amount of standing orders paying for leasing?","gold_sql":"SELECT SUM(amount) FROM \"order\" WHERE k_symbol='LEASING'"}
+{"id":"h_11","question":"How many accounts have at least one loan?","gold_sql":"SELECT COUNT(DISTINCT account_id) FROM loan"}
+{"id":"h_12","question":"How many male clients were born before 1950?","gold_sql":"SELECT COUNT(*) FROM client WHERE gender='M' AND birth_date < '1950-01-01'"}
+{"id":"h_13","question":"What is the total loan amount for accounts located in the Prague region?","gold_sql":"SELECT SUM(l.amount) FROM loan l JOIN account a ON l.account_id=a.account_id JOIN district d ON a.district_id=d.district_id WHERE d.A3='Prague'"}
+{"id":"h_14","question":"How many junior cards belong to female account owners?","gold_sql":"SELECT COUNT(*) FROM card cd JOIN disp dp ON cd.disp_id=dp.disp_id JOIN client c ON dp.client_id=c.client_id WHERE cd.type='junior' AND c.gender='F' AND dp.type='OWNER'"}
+{"id":"h_15","question":"What is the total amount of credit transactions (incoming) for account 3 across all time?","gold_sql":"SELECT SUM(amount) FROM trans WHERE account_id=3 AND type='PRIJEM'"}
+{"id":"h_16","question":"List the 3 districts with the highest unemployment rate in 1996, with district name and rate.","gold_sql":"SELECT A2, A13 FROM district ORDER BY A13 DESC LIMIT 3"}
+{"id":"h_17","question":"How many loans were approved in 1996?","gold_sql":"SELECT COUNT(*) FROM loan WHERE strftime('%Y',date)='1996'"}
+{"id":"h_18","question":"For each region, how many accounts are there? Order by count descending.","gold_sql":"SELECT d.A3, COUNT(*) AS n FROM account a JOIN district d ON a.district_id=d.district_id GROUP BY d.A3 ORDER BY n DESC"}
+{"id":"h_19","question":"What is the average balance of transactions for account 2?","gold_sql":"SELECT AVG(balance) FROM trans WHERE account_id=2"}
+{"id":"h_20","question":"How many clients are authorized users (disponents) rather than owners or users?","gold_sql":"SELECT COUNT(DISTINCT client_id) FROM disp WHERE type='DISPONENT'"}
+{"id":"h_21","question":"What is the highest monthly loan payment among loans of clients in the south Bohemia region?","gold_sql":"SELECT MAX(l.payments) FROM loan l JOIN disp dp ON l.account_id=dp.account_id AND dp.type='OWNER' JOIN client c ON dp.client_id=c.client_id JOIN district d ON c.district_id=d.district_id WHERE d.A3='south Bohemia'"}
+{"id":"h_22","question":"How many accounts were opened in 1993?","gold_sql":"SELECT COUNT(*) FROM account WHERE strftime('%Y',date)='1993'"}

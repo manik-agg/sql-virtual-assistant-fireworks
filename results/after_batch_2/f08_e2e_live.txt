@@ -1,0 +1,14 @@
+PASS timeout: clear message shown
+PASS timeout: same session still answers the next question
+PASS ctrl-c at prompt: session stays alive
+PASS ctrl-c at prompt: next question works
+PASS ctrl-d exits
+PASS exit status 0  [0]
+PASS spinner with elapsed seconds is visible while waiting
+PASS ctrl-c mid-turn: turn cancelled
+PASS cancelled turn left no context (no topic-switch notice)
+PASS exit right after cancel does not wait for the abandoned call  [0.5s]
+PASS clean exit after cancel  [0]
+PASS no traceback in any session
+
+12/12 checks passed

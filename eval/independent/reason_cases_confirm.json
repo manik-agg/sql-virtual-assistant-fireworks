@@ -1,0 +1,9 @@
+{
+ "_note": "Confirmation set written before the F-05 prompt tweak was tried. None of these questions were used to choose or tune the wording.",
+ "A2_multi_step": ["Why are some districts richer than others?", "Predict how many loans will default next year.", "What explains the drop in card issuance in 1998?",
+                   "Estimate next quarter's total transaction volume.", "Which factors make a client more likely to default on a loan?",
+                   "Recommend which district we should focus on to grow the number of accounts.", "Why do customers complain so much?"],
+ "C2_not_in_database": ["How many warehouses does the bank own?", "Show each client's home address.", "What is the bank's annual revenue?", "How many tellers work in each district?"],
+ "D2_proxy": ["How many branches does the bank have?", "What is the average income of clients?", "How many premium customers are there?", "What is the total profit from loans?", "Which clients are high risk?"],
+ "F2_legit": ["What is the total amount of loans in the south Bohemia region?", "How many male clients are there?", "What is the smallest transaction amount?", "How many standing orders are there per purpose code?", "Which districts have an unemployment rate above 5 percent in 1995?", "How many cards were issued in 1995?"]
+}

@@ -1,0 +1,137 @@
+[
+ {
+  "id": "v01",
+  "category": "filter+date",
+  "question": "How many junior cards were issued in 1997?",
+  "gold_sql": "SELECT COUNT(*) FROM card WHERE type='junior' AND strftime('%Y', issued)='1997'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "v02",
+  "category": "aggregation",
+  "question": "What is the average monthly payment for loans that last 36 months?",
+  "gold_sql": "SELECT AVG(payments) FROM loan WHERE duration=36",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "v03",
+  "category": "mode",
+  "question": "Which loan repayment status is the most common?",
+  "gold_sql": "SELECT status FROM loan GROUP BY status ORDER BY COUNT(*) DESC LIMIT 1",
+  "gold_confidence": "high",
+  "note": "tie checked below",
+  "expect_status": null
+ },
+ {
+  "id": "v04",
+  "category": "group by date",
+  "question": "How many accounts were opened in each year? Show the year and the count, ordered by year.",
+  "gold_sql": "SELECT strftime('%Y', date) AS y, COUNT(*) FROM account GROUP BY y ORDER BY y",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "v05",
+  "category": "code + group",
+  "question": "What is the total amount of standing orders for each purpose code, ignoring orders with no purpose? Order by total, largest first.",
+  "gold_sql": "SELECT k_symbol, SUM(amount) AS t FROM \"order\" WHERE TRIM(k_symbol)<>'' GROUP BY k_symbol ORDER BY t DESC",
+  "gold_confidence": "medium",
+  "note": "blank (not NULL) k_symbol",
+  "expect_status": null
+ },
+ {
+  "id": "v06",
+  "category": "date range",
+  "question": "How many clients were born in the 1970s?",
+  "gold_sql": "SELECT COUNT(*) FROM client WHERE birth_date >= '1970-01-01' AND birth_date < '1980-01-01'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "v07",
+  "category": "top-1 + name",
+  "question": "Which district has the highest average salary, and what is the salary?",
+  "gold_sql": "SELECT A2, A11 FROM district ORDER BY A11 DESC LIMIT 1",
+  "gold_confidence": "medium",
+  "note": "tie checked below",
+  "expect_status": null
+ },
+ {
+  "id": "v08",
+  "category": "text number",
+  "question": "How many districts have more than 100,000 inhabitants?",
+  "gold_sql": "SELECT COUNT(*) FROM district WHERE CAST(A4 AS INTEGER) > 100000",
+  "gold_confidence": "medium",
+  "note": "A4 is stored as TEXT",
+  "expect_status": null
+ },
+ {
+  "id": "v09",
+  "category": "id filter",
+  "question": "How many transactions were made on account 2000?",
+  "gold_sql": "SELECT COUNT(*) FROM trans WHERE account_id=2000",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "v10",
+  "category": "comparison",
+  "question": "What is the average loan amount for loans of 24 months or shorter?",
+  "gold_sql": "SELECT AVG(amount) FROM loan WHERE duration<=24",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "v11",
+  "category": "join 3",
+  "question": "How many female clients hold a gold card?",
+  "gold_sql": "SELECT COUNT(DISTINCT c.client_id) FROM card cd JOIN disp d ON cd.disp_id=d.disp_id JOIN client c ON d.client_id=c.client_id WHERE cd.type='gold' AND c.gender='F'",
+  "gold_confidence": "medium",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "v12",
+  "category": "avg + NULL + rank",
+  "question": "Which region had the lowest average unemployment rate in 1995? Give the region name.",
+  "gold_sql": "SELECT A3 FROM district GROUP BY A3 ORDER BY AVG(A12) ASC LIMIT 1",
+  "gold_confidence": "medium",
+  "note": "A12 has NULLs; tie checked below",
+  "expect_status": null
+ },
+ {
+  "id": "v13",
+  "category": "join + code",
+  "question": "How many accounts with weekly statement issuance have a loan?",
+  "gold_sql": "SELECT COUNT(DISTINCT a.account_id) FROM account a JOIN loan l ON a.account_id=l.account_id WHERE a.frequency='POPLATEK TYDNE'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "v14",
+  "category": "code + date",
+  "question": "What was the total value of withdrawals (VYDAJ) in 1995?",
+  "gold_sql": "SELECT SUM(amount) FROM trans WHERE type='VYDAJ' AND strftime('%Y', date)='1995'",
+  "gold_confidence": "high",
+  "note": "",
+  "expect_status": null
+ },
+ {
+  "id": "v15",
+  "category": "ambiguous",
+  "question": "Which accounts are doing well?",
+  "gold_sql": null,
+  "gold_confidence": "n/a",
+  "note": "'doing well' undefined",
+  "expect_status": "clarify"
+ }
+]

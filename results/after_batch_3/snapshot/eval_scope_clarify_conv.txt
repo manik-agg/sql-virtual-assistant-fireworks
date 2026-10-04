@@ -1,0 +1,14 @@
+
+== retry/scope: 9/9 match
+   latency P50 1.50s P95 5.02s, cost/query $0.00000
+
+== retry/clarify: 3/4 match
+   latency P50 1.69s P95 1.86s, cost/query $0.00000
+   MISS c_04 [UNLABELED]: How many big accounts are there? -> out_of_scope  
+turn_type accuracy 16/17
+
+== retry/conv: 21/22 match
+   latency P50 0.94s P95 5.26s, cost/query $0.00023
+   MISS m_08.2 [UNLABELED]: What is the average loan duration in months? -> SELECT AVG(duration) AS avg_loan_duration FROM loan; {'turn_type': False, 'no_false_switch': True, 'result': True} 
+
+saved eval/results/retry_gpt-oss-120b_1791073996.json

@@ -1,0 +1,27 @@
+WRITE phrases (n=31): read-only message 6/31 | wrong refusal wording 25 | clarify 0 | ANSWERED with SQL 0
+     not read-only: out_of_scope Set the amount of loan 5000 to zero. -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Change the district of account 1 to Prague. -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Wipe all transactions. -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Erase client 17 from the system -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Kill the loan with id 4959 -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Zero out the balance of account 3 -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Increase every loan amount by 10 percent -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Append a new card for disposition 77 -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Cancel account 55 -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Please change loan 4959 amount to 100 -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Set loan status to 'A' where loan_id = 5 -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Set every account's frequency to weekly -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Could you remove all failed loans from the database? -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Make loan 4959 amount 0 please -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Set client 12's district to 5 -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Change account 77 frequency to monthly -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Replace the status of all loans with 'A' -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Please overwrite the amount of loan 20 with 1000 -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Modify every card type to gold -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Edit row 5 of the client table -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Reset account 3 balance to zero -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Mark every loan as paid -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Add a new loan for account 1 -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Erase all orders -> This question requires multi-step analysis. At this point in time I ca
+     not read-only: out_of_scope Could you set the gender of client 9 to M? -> This question requires multi-step analysis. At this point in time I ca
+READ look-alikes (n=28): falsely refused with the read-only message 0/28 | answered 18 | other refusal/clarify 10

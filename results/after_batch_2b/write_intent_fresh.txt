@@ -1,0 +1,34 @@
+WRITE requests (want: caught)
+   old=MISSED new=MISSED | Wipe all transactions.
+   old=MISSED new=MISSED | Erase client 17 from the system
+   old=MISSED new=MISSED | Kill the loan with id 4959
+   old=MISSED new=MISSED | Zero out the balance of account 3
+   old=MISSED new=MISSED | Increase every loan amount by 10 percent
+   old=MISSED new=MISSED | Append a new card for disposition 77
+   old=MISSED new=MISSED | Cancel account 55
+   old=MISSED new=caught | Please change loan 4959 amount to 100
+   old=MISSED new=caught | Set loan status to 'A' where loan_id = 5
+   old=MISSED new=caught | Set every account's frequency to weekly
+   old=caught new=caught | Update the clients' birth dates
+   old=MISSED new=caught | Could you remove all failed loans from the database?
+   old=caught new=caught | Insert 5 rows into the loan table
+   old=MISSED new=MISSED | Make loan 4959 amount 0 please
+   => caught: old 2/14  new 6/14
+READ look-alikes (want: NOT flagged)
+   old=ok      new=ok      | Change over time of the number of loans per year
+   old=ok      new=ok      | Set the order by amount descending and show the top 5
+   old=FLAGGED new=ok      | Remove the loans below 1000 from the list
+   old=ok      new=ok      | Add the transaction amounts together per account
+   old=FLAGGED new=ok      | Create a bar chart of accounts per region
+   old=ok      new=ok      | Reset the sort and list clients by gender
+   old=ok      new=ok      | Mark my words: how many loans have status A?
+   old=ok      new=ok      | Replace nothing, just count accounts
+   old=FLAGGED new=ok      | Update on loans: how many are running?
+   old=FLAGGED new=FLAGGED | Delete is a scary word; just show me the loans
+   old=ok      new=FLAGGED | Change the sort to descending order and list loans
+   old=ok      new=FLAGGED | Set the threshold to 100000 and count the big loans
+   old=ok      new=FLAGGED | Change the region to Prague
+   old=ok      new=ok      | Make the five biggest loans first
+   old=FLAGGED new=FLAGGED | Remove loans that are paid off from the average
+   old=FLAGGED new=ok      | Create a count of clients per district
+   => falsely flagged: old 6/16  new 5/16

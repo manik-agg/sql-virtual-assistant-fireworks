@@ -1,0 +1,161 @@
+=== b0
+== b0/dev: 0/10 match
+   executed 0/10, first-attempt ok 0/10, shape-differs 0
+   latency P50 2.15s P95 2.86s, cost/query $0.00032
+== b0/dev: 0/10 match
+   executed 0/10, first-attempt ok 0/10, shape-differs 0
+   latency P50 2.09s P95 2.73s, cost/query $0.00032
+== b0/dev: 0/10 match
+   executed 0/10, first-attempt ok 0/10, shape-differs 0
+   latency P50 2.03s P95 2.83s, cost/query $0.00032
+== b0/heldout: 0/22 match
+   executed 0/22, first-attempt ok 0/22, shape-differs 0
+   latency P50 1.66s P95 2.64s, cost/query $0.00028
+== b0/heldout: 0/22 match
+   executed 0/22, first-attempt ok 0/22, shape-differs 0
+   latency P50 1.65s P95 3.61s, cost/query $0.00028
+== b0/heldout: 0/22 match
+   executed 0/22, first-attempt ok 0/22, shape-differs 0
+   latency P50 1.62s P95 2.22s, cost/query $0.00028
+saved eval/results/b0_gpt-oss-120b_1791076580.json
+=== b1
+== b1/dev: 1/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.45s P95 2.99s, cost/query $0.00028
+== b1/dev: 1/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.39s P95 2.82s, cost/query $0.00021
+== b1/dev: 1/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.36s P95 2.81s, cost/query $0.00021
+== b1/heldout: 6/22 match
+   executed 19/22, first-attempt ok 19/22, shape-differs 0
+   latency P50 0.90s P95 2.23s, cost/query $0.00020
+== b1/heldout: 6/22 match
+   executed 19/22, first-attempt ok 19/22, shape-differs 0
+   latency P50 1.06s P95 2.12s, cost/query $0.00015
+== b1/heldout: 6/22 match
+   executed 19/22, first-attempt ok 19/22, shape-differs 0
+   latency P50 0.96s P95 2.10s, cost/query $0.00015
+saved eval/results/b1_gpt-oss-120b_1791076695.json
+=== s_ddl
+== s_ddl/dev: 1/10 match
+   executed 7/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.99s P95 2.46s, cost/query $0.00038
+== s_ddl/dev: 1/10 match
+   executed 7/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.79s P95 2.37s, cost/query $0.00025
+== s_ddl/dev: 1/10 match
+   executed 7/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.87s P95 2.19s, cost/query $0.00025
+== s_ddl/heldout: 7/22 match
+   executed 19/22, first-attempt ok 22/22, shape-differs 0
+   latency P50 1.26s P95 2.28s, cost/query $0.00031
+== s_ddl/heldout: 7/22 match
+   executed 19/22, first-attempt ok 22/22, shape-differs 0
+   latency P50 1.30s P95 2.36s, cost/query $0.00019
+== s_ddl/heldout: 7/22 match
+   executed 19/22, first-attempt ok 22/22, shape-differs 0
+   latency P50 1.16s P95 2.79s, cost/query $0.00019
+saved eval/results/s_ddl_gpt-oss-120b_1791076838.json
+=== s_desc
+== s_desc/dev: 6/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.46s P95 2.97s, cost/query $0.00042
+== s_desc/dev: 6/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.38s P95 2.91s, cost/query $0.00022
+== s_desc/dev: 6/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.18s P95 2.61s, cost/query $0.00022
+== s_desc/heldout: 16/22 match
+   executed 22/22, first-attempt ok 22/22, shape-differs 0
+   latency P50 1.20s P95 2.87s, cost/query $0.00038
+== s_desc/heldout: 16/22 match
+   executed 22/22, first-attempt ok 22/22, shape-differs 0
+   latency P50 1.11s P95 2.05s, cost/query $0.00019
+== s_desc/heldout: 16/22 match
+   executed 22/22, first-attempt ok 22/22, shape-differs 0
+   latency P50 1.42s P95 2.51s, cost/query $0.00019
+saved eval/results/s_desc_gpt-oss-120b_1791076972.json
+=== s_values
+== s_values/dev: 8/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.13s P95 2.12s, cost/query $0.00021
+== s_values/dev: 8/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 0.99s P95 2.18s, cost/query $0.00021
+== s_values/dev: 8/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.03s P95 2.18s, cost/query $0.00021
+== s_values/heldout: 21/22 match
+   executed 22/22, first-attempt ok 22/22, shape-differs 1
+   latency P50 1.11s P95 2.06s, cost/query $0.00027
+== s_values/heldout: 21/22 match
+   executed 22/22, first-attempt ok 22/22, shape-differs 1
+   latency P50 1.03s P95 2.12s, cost/query $0.00017
+== s_values/heldout: 21/22 match
+   executed 22/22, first-attempt ok 22/22, shape-differs 1
+   latency P50 1.00s P95 1.85s, cost/query $0.00017
+saved eval/results/s_values_gpt-oss-120b_1791077086.json
+=== retry
+== retry/dev: 8/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.30s P95 2.21s, cost/query $0.00021
+== retry/dev: 8/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.08s P95 2.09s, cost/query $0.00021
+== retry/dev: 8/10 match
+   executed 10/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.09s P95 2.91s, cost/query $0.00021
+== retry/heldout: 21/22 match
+   executed 22/22, first-attempt ok 22/22, shape-differs 1
+   latency P50 0.93s P95 2.27s, cost/query $0.00017
+== retry/heldout: 21/22 match
+   executed 22/22, first-attempt ok 22/22, shape-differs 1
+   latency P50 0.92s P95 1.94s, cost/query $0.00017
+== retry/heldout: 21/22 match
+   executed 22/22, first-attempt ok 22/22, shape-differs 1
+   latency P50 0.97s P95 1.91s, cost/query $0.00017
+saved eval/results/retry_gpt-oss-120b_1791077197.json
+=== nodesc
+== nodesc/dev: 6/10 match
+   executed 9/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.38s P95 2.37s, cost/query $0.00040
+== nodesc/dev: 6/10 match
+   executed 9/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.34s P95 2.73s, cost/query $0.00022
+== nodesc/dev: 6/10 match
+   executed 9/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.33s P95 3.01s, cost/query $0.00022
+== nodesc/heldout: 18/22 match
+   executed 20/22, first-attempt ok 22/22, shape-differs 1
+   latency P50 1.15s P95 2.68s, cost/query $0.00035
+== nodesc/heldout: 18/22 match
+   executed 20/22, first-attempt ok 22/22, shape-differs 1
+   latency P50 0.94s P95 2.60s, cost/query $0.00018
+== nodesc/heldout: 18/22 match
+   executed 20/22, first-attempt ok 22/22, shape-differs 1
+   latency P50 1.10s P95 2.19s, cost/query $0.00018
+saved eval/results/nodesc_gpt-oss-120b_1791077328.json
+=== autodesc
+== autodesc/dev: 6/10 match
+   executed 9/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.49s P95 2.72s, cost/query $0.00048
+== autodesc/dev: 6/10 match
+   executed 9/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.49s P95 2.37s, cost/query $0.00022
+== autodesc/dev: 6/10 match
+   executed 9/10, first-attempt ok 10/10, shape-differs 0
+   latency P50 1.21s P95 2.39s, cost/query $0.00022
+== autodesc/heldout: 17/22 match
+   executed 19/22, first-attempt ok 22/22, shape-differs 0
+   latency P50 0.99s P95 2.75s, cost/query $0.00044
+== autodesc/heldout: 17/22 match
+   executed 19/22, first-attempt ok 22/22, shape-differs 0
+   latency P50 1.06s P95 3.40s, cost/query $0.00020
+== autodesc/heldout: 17/22 match
+   executed 19/22, first-attempt ok 22/22, shape-differs 0
+   latency P50 0.95s P95 2.98s, cost/query $0.00020
+saved eval/results/autodesc_gpt-oss-120b_1791077461.json
+REFRESH DONE

@@ -1,0 +1,8 @@
+original_column_name,column_name,column_description,data_format,value_description
+loan_id,,Unique identifier for each loan record (primary key).,,
+account_id,,Identifier of the borrower’s account; foreign key to the account table.,,
+date,,Date the loan was originated or issued.,,
+amount,,Principal amount of the loan (currency units).,,
+duration,,"Length of the loan term, likely expressed in months.",,
+payments,,"Regular payment amount (e.g., monthly) for the loan.",,
+status,,"Loan status code; observed values: A (active/current), B (paid off/closed), C (defaulted/charged‑off), D (delinquent/overdue).",,

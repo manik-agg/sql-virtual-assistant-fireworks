@@ -1,0 +1,14 @@
+[V1] PROXY_dev: flagged 4/5 bare proxy answers | LEGIT_dev: flagged 7/93 legitimate answers (8% noise)
+      proxy  FLAG What is the average salary of clients?               -> ASSUMES: clients' salary equals district's average salary (A11)
+      proxy  MISS What is the total revenue from interest income?      -> EXACT
+      proxy  FLAG How many branches does the bank have?                -> ASSUMES: each district row represents a bank branch.
+      proxy  FLAG What is the average income of clients?               -> ASSUMES: client income equals district average salary.
+      proxy  FLAG Which clients are high risk?                         -> ASSUMES: high risk = loan status 'D' (client in debt)
+      NOISE  Which client has the highest total loan amount?      -> ASSUMES: only OWNER dispositions count for client loans
+      NOISE  How many accounts receive statements weekly, which i -> ASSUMES: frequency column indicates weekly statement issuance.
+      NOISE  How many standing orders are there?                  -> ASSUMES: all rows in "order" represent standing orders.
+      NOISE  How many standing orders are there per purpose code? -> ASSUMES: all orders are standing orders.
+      NOISE  How many distinct accounts have a standing order for -> ASSUMES: that POJISTNE orders represent standing orders for insurance payment
+      NOISE  How many loans were granted to accounts that were op -> ASSUMES: a.date is the account opening date.
+      NOISE  How many accounts get their statement issued after e -> ASSUMES: statement issued = k_symbol='SLUZBY' transaction only.
+      audit call: median latency 0.38s, mean cost $0.00012, mean completion tokens 66

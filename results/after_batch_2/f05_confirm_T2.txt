@@ -1,0 +1,8 @@
+[T2] A2 multi-step (7): multi-step message: 5/7
+      FAIL answer       reason=none | Recommend which district we should focus on to grow the numb ->  | assumed=district with the fewest existing accounts
+      FAIL out_of_scope reason=not_in_database | Why do customers complain so much? -> I couldn't find data for customer complaints in this database. | assumed=None
+[T2] C2 not in database (4): 'couldn't find' message: 4/4
+[T2] D2 proxy (5): refusal OR assumed OR clarify (never a bare answer): 4/5
+      FAIL answer       reason=none | How many branches does the bank have? ->  | assumed=None
+[T2] F2 legit (6): answered: 6/6
+[T2] total 19/22

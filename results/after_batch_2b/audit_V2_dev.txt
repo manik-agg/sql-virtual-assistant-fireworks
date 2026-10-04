@@ -1,0 +1,13 @@
+[V2] PROXY_dev: flagged 4/5 bare proxy answers | LEGIT_dev: flagged 6/93 legitimate answers (6% noise)
+      proxy  FLAG What is the average salary of clients?               -> ASSUMES: average salary → district A11 (district average salary, not client inco
+      proxy  MISS What is the total revenue from interest income?      -> EXACT
+      proxy  FLAG How many branches does the bank have?                -> ASSUMES: "branches" read as districts (rows in district table)
+      proxy  FLAG What is the average income of clients?               -> ASSUMES: income interpreted as average salary (A11) rather than true client inco
+      proxy  FLAG Which clients are high risk?                         -> ASSUMES: "high risk" interpreted as clients with loan status 'D' (in debt)
+      NOISE  What is the total amount of standing orders whose pu -> ASSUMES: “standing orders” interpreted as all rows in the order table.
+      NOISE  How many standing orders are there?                  -> ASSUMES: "standing orders" read as all rows in the "order" table.
+      NOISE  How many standing orders are there per purpose code? -> ASSUMES: "standing orders" = rows in the "order" table.
+      NOISE  How many distinct accounts have a standing order for -> ASSUMES: "standing order" = any row in "order" with k_symbol='POJISTNE' (insuran
+      NOISE  How many accounts get their statement issued after e -> ASSUMES: “after each transaction” interpreted as any transaction with k_symbol =
+      NOISE  How many standing orders are for household payments  -> ASSUMES: standing orders = rows in "order" table.
+      audit call: median latency 0.46s, mean cost $0.00012, mean completion tokens 82

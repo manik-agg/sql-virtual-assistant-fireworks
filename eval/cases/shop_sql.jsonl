@@ -1,0 +1,12 @@
+{"id":"p_01","question":"How many customers are on the pro tier?","gold_sql":"SELECT COUNT(*) FROM customer WHERE tier='pro'"}
+{"id":"p_02","question":"How many purchases were placed in 2023?","gold_sql":"SELECT COUNT(*) FROM purchase WHERE strftime('%Y', placed_on)='2023'"}
+{"id":"p_03","question":"Which country has the most customers? Give the country name.","gold_sql":"SELECT co.name FROM customer cu JOIN country co ON cu.country_code=co.code GROUP BY co.code ORDER BY COUNT(*) DESC LIMIT 1"}
+{"id":"p_04","question":"What is the average unit price of products in the books category?","gold_sql":"SELECT AVG(unit_price) FROM product WHERE category='books'"}
+{"id":"p_05","question":"How many purchases were cancelled?","gold_sql":"SELECT COUNT(*) FROM purchase WHERE st='X'"}
+{"id":"p_06","question":"What is the total quantity of items bought by customers from Germany?","gold_sql":"SELECT SUM(pl.qty) FROM purchase_line pl JOIN purchase p ON pl.purchase_id=p.id JOIN customer c ON p.customer_id=c.id JOIN country co ON c.country_code=co.code WHERE co.name='Germany'"}
+{"id":"p_07","question":"How many products belong to the bestseller group?","gold_sql":"SELECT COUNT(DISTINCT pg.product_id) FROM product_group pg JOIN \"group\" g ON pg.group_id=g.id WHERE g.label='bestseller'"}
+{"id":"p_08","question":"How many customers signed up in 2022 and are on the plus tier?","gold_sql":"SELECT COUNT(*) FROM customer WHERE strftime('%Y', signup_date)='2022' AND tier='plus'"}
+{"id":"p_09","question":"List the number of customers per continent, highest first.","gold_sql":"SELECT co.continent, COUNT(*) AS n FROM customer c JOIN country co ON c.country_code=co.code GROUP BY co.continent ORDER BY n DESC"}
+{"id":"p_10","question":"What is the total revenue from shipped purchases in 2024, after discounts? Revenue is qty times unit price times (1 - discount_pct/100).","gold_sql":"SELECT SUM(pl.qty*pr.unit_price*(1-pl.discount_pct/100.0)) FROM purchase p JOIN purchase_line pl ON pl.purchase_id=p.id JOIN product pr ON pr.id=pl.product_id WHERE p.st='S' AND strftime('%Y', p.placed_on)='2024'"}
+{"id":"p_11","question":"How many purchases were refunded?","gold_sql":"SELECT COUNT(*) FROM purchase WHERE st='R'"}
+{"id":"p_12","question":"How many distinct customers bought a product from the games category?","gold_sql":"SELECT COUNT(DISTINCT p.customer_id) FROM purchase p JOIN purchase_line pl ON pl.purchase_id=p.id JOIN product pr ON pr.id=pl.product_id WHERE pr.category='games'"}

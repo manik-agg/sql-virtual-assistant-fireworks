@@ -1,0 +1,4 @@
+{"id":"c_01","question":"How many good loans are there?","expect":"clarify"}
+{"id":"c_02","question":"Show me the top clients.","expect":"clarify"}
+{"id":"c_03","question":"What is the total amount for last year?","expect":"clarify"}
+{"id":"c_04","question":"How many big accounts are there?","expect":"clarify"}

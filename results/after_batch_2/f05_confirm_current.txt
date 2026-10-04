@@ -1,0 +1,11 @@
+[current] A2 multi-step (7): multi-step message: 4/7
+      FAIL out_of_scope reason=not_in_database | Predict how many loans will default next year. -> I couldn't find data for loan default prediction in this database. Closest in th | assumed=None
+      FAIL out_of_scope reason=not_in_database | Estimate next quarter's total transaction volume. -> I couldn't find data for future transaction volume in this database. Closest in  | assumed=None
+      FAIL out_of_scope reason=not_in_database | Why do customers complain so much? -> I couldn't find data for customer complaints in this database. | assumed=None
+[current] C2 not in database (4): 'couldn't find' message: 4/4
+[current] D2 proxy (5): refusal OR assumed OR clarify (never a bare answer): 2/5
+      FAIL answer       reason=none | How many branches does the bank have? ->  | assumed=None
+      FAIL answer       reason=none | What is the average income of clients? ->  | assumed=None
+      FAIL answer       reason=none | How many premium customers are there? ->  | assumed=None
+[current] F2 legit (6): answered: 6/6
+[current] total 16/22

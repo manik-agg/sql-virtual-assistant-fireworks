@@ -1,0 +1,9 @@
+CURRENT (new rule + date notes)                         results [273, 273, 273]  (gold 213)
+A: old blanket rule restored, date notes kept           results [213, 213, 213]  (gold 213)
+B: new rule, date notes REMOVED                         results [273, 273, 273]  (gold 213)
+C: old rule AND date notes removed (= pre-fix prompt)   results [213, 213, 213]  (gold 213)
+
+VARIANT D: pointer sentence REMOVED (date notes kept):
+  m06 (YYYYMMDD text)      [80, 80, 80] (gold 80)
+  m07 (YYYYMMDD int)       [416, 416, 416] (gold 416)
+  m09 (count distinct)     [273, 273, 273] (gold 213)
